@@ -3,14 +3,16 @@ package cl.rojasycia.tesisguiamovil.interfacesusuario;
 import java.util.ArrayList;
 
 import com.actionbarsherlock.app.SherlockFragment;
+
 import cl.rojasycia.tesisguiamovil.R;
-
-import cl.rojasycia.tesisguiamovil.universidades.*;
-
+import cl.rojasycia.tesisguiamovil.universidad.structlistuniv.*;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class Fragment2 extends SherlockFragment {
@@ -30,11 +32,37 @@ public class Fragment2 extends SherlockFragment {
 		rellenarArrayList();
 		adapter = new UniversidadAdapter(getActivity(), arrayUniversidades);
 		lvlUniversidades.setAdapter(adapter);
+		
+		lvlUniversidades.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int posicion, long id) {
+            	switch (posicion){
+            	case 0:
+            		lanzarUniversidad(posicion);
+            		break;
+            	case 1:
+            		lanzarUniversidad(posicion);
+            		break;
+            	case 2:
+            		lanzarUniversidad(posicion);
+            		break;
+            	case 3:
+            		lanzarUniversidad(posicion);
+            		break;
+            	}
+            }
+        });
 
 
 		return rootView;
 	}
 	
+	public void lanzarUniversidad(int a){
+		Intent intent;
+		intent = new Intent(getActivity(), InfUniversidadActivity.class);
+//		intent.putExtra("universidad_elegida", a);
+		startActivity(intent);
+	}
 
 	private void rellenarArrayList() {
 		arrayUniversidades.add(new UniversidadItem("Universidad de Playa Ancha de Ciencias de la Educación", R.drawable.u_upla));

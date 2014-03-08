@@ -25,6 +25,7 @@
         <!-- Menu -->
         <activity android:name="cl.rojasycia.tesisguiamovil.interfacesusuario.PrincipalActivity" >
         </activity>
+        <activity android:name="cl.rojasycia.tesisguiamovil.interfacesusuario.InfUniversidadActivity"></activity>
         
     </application>
 
