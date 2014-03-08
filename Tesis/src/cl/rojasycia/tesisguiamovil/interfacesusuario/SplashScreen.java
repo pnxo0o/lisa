@@ -9,7 +9,7 @@ import com.androidbegin.sidemenututorial.R;
 
 public class SplashScreen extends SherlockActivity {
 
-	// Splash screen timer
+	// Tiempo
 	private static int SPLASH_TIME_OUT = 2000;
 
 	@Override
