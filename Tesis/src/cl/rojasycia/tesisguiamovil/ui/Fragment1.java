@@ -1,4 +1,4 @@
-package cl.rojasycia.tesisguiamovil.interfacesusuario;
+package cl.rojasycia.tesisguiamovil.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import cl.rojasycia.tesisguiamovil.R;

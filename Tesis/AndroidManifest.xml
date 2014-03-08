@@ -14,7 +14,7 @@
         
         <!-- Splash Screen -->
         <activity
-            android:name="cl.rojasycia.tesisguiamovil.interfacesusuario.SplashScreen"
+            android:name="cl.rojasycia.tesisguiamovil.ui.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +23,11 @@
         </activity>
         
         <!-- Menu -->
-        <activity android:name="cl.rojasycia.tesisguiamovil.interfacesusuario.PrincipalActivity" >
+        <activity android:name="cl.rojasycia.tesisguiamovil.ui.PrincipalActivity" >
         </activity>
         
         <activity 
-            android:name="cl.rojasycia.tesisguiamovil.interfacesusuario.InfUniversidadActivity"
+            android:name="cl.rojasycia.tesisguiamovil.ui.InfUniversidadActivity"
             android:theme="@style/Theme.Sherlock.TranslucentActionBar">
         </activity>
         

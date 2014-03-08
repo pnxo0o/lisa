@@ -1,4 +1,4 @@
-package cl.rojasycia.tesisguiamovil.interfacesusuario;
+package cl.rojasycia.tesisguiamovil.ui;
 
 import android.os.Bundle;
 import cl.rojasycia.tesisguiamovil.R;

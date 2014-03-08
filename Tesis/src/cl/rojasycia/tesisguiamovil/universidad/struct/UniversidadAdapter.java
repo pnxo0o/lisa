@@ -1,4 +1,4 @@
-package cl.rojasycia.tesisguiamovil.universidad.structlistuniv;
+package cl.rojasycia.tesisguiamovil.universidad.struct;
 
 import java.util.ArrayList;
 

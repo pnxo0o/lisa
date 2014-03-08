@@ -1,11 +1,11 @@
-package cl.rojasycia.tesisguiamovil.interfacesusuario;
+package cl.rojasycia.tesisguiamovil.ui;
 
 import java.util.ArrayList;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
 import cl.rojasycia.tesisguiamovil.R;
-import cl.rojasycia.tesisguiamovil.universidad.structlistuniv.*;
+import cl.rojasycia.tesisguiamovil.universidad.struct.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
