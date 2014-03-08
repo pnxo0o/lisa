@@ -9,7 +9,7 @@ import com.androidbegin.sidemenututorial.R;
 
 public class SplashScreen extends SherlockActivity {
 
-	// Tiempo
+	// Tiempo de pantalla
 	private static int SPLASH_TIME_OUT = 2000;
 
 	@Override
@@ -21,18 +21,17 @@ public class SplashScreen extends SherlockActivity {
 		new Handler().postDelayed(new Runnable() {
 
 			/*
-			 * Showing splash screen with a timer. This will be useful when you
-			 * want to show case your app logo / company
+			 * Mostrando la pantalla de inicion
 			 */
 
 			@Override
 			public void run() {
-				// This method will be executed once the timer is over
-				// Start your app main activity
+				// Este metodo se ejecutará cuando se acabe el tiempo
+				// Se iniciará el Fragment
 				Intent i = new Intent(SplashScreen.this, PrincipalActivity.class);
 				startActivity(i);
 
-				// close this activity
+				// Se cierra esta Actividad
 				finish();
 			}
 		}, SPLASH_TIME_OUT);

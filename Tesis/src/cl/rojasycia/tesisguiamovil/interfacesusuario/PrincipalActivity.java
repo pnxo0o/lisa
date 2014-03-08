@@ -38,7 +38,7 @@ public class PrincipalActivity extends SherlockFragmentActivity {
 		setContentView(R.layout.drawer_main);
 
 		// Get the Title
-		mTitle = mDrawerTitle = getTitle();
+		mTitle = mDrawerTitle = "Guia Móvil del Universitario";
 
 		// Generate title
 		title = new String[] { "Buscar",
@@ -47,8 +47,8 @@ public class PrincipalActivity extends SherlockFragmentActivity {
 
 		// Generate subtitle
 		subtitle = new String[] { "Encuentre lugares",
-								  "Sus ubicaciones y noticias",
-				  				   "La aplicación (:" };
+								  "Ubicaciones y noticias",
+				  				   "La aplicación :)" };
 
 		// Generate icon
 		icon = new int[] { R.drawable.action_about, R.drawable.action_settings,
