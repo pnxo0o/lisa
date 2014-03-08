@@ -1,5 +1,6 @@
 package cl.rojasycia.tesisguiamovil.universidades;
 
+
 public class UniversidadItem {
 	
 	private String nombre;
