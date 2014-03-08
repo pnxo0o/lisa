@@ -4,7 +4,7 @@
     android:versionName="0.1" >
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
     <application
@@ -25,7 +25,12 @@
         <!-- Menu -->
         <activity android:name="cl.rojasycia.tesisguiamovil.interfacesusuario.PrincipalActivity" >
         </activity>
-        <activity android:name="cl.rojasycia.tesisguiamovil.interfacesusuario.InfUniversidadActivity"></activity>
+        
+        <activity 
+            android:name="cl.rojasycia.tesisguiamovil.interfacesusuario.InfUniversidadActivity"
+            android:theme="@style/Theme.Sherlock.TranslucentActionBar">
+        </activity>
+        
         
     </application>
 
