@@ -2,7 +2,7 @@ package cl.rojasycia.tesisguiamovil.universidades;
 
 import java.util.ArrayList;
 
-import com.androidbegin.sidemenututorial.R;
+import cl.rojasycia.tesisguiamovil.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

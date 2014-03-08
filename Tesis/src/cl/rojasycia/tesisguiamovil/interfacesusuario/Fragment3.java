@@ -1,7 +1,7 @@
 package cl.rojasycia.tesisguiamovil.interfacesusuario;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.androidbegin.sidemenututorial.R;
+import cl.rojasycia.tesisguiamovil.R;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -2,7 +2,7 @@ package cl.rojasycia.tesisguiamovil.interfacesusuario;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.androidbegin.sidemenututorial.R;
+import cl.rojasycia.tesisguiamovil.R;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;

@@ -1,6 +1,6 @@
 package cl.rojasycia.tesisguiamovil.interfacesusuario;
 
-import com.androidbegin.sidemenututorial.R;
+import cl.rojasycia.tesisguiamovil.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

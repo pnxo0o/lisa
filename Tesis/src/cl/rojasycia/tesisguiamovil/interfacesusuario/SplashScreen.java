@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import com.androidbegin.sidemenututorial.R;
+import cl.rojasycia.tesisguiamovil.R;
 
 public class SplashScreen extends SherlockActivity {
 
