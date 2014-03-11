@@ -25,11 +25,10 @@ public class InfUniversidadActivity extends SherlockActivity {
 
     }
 	
-//	@Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//       MenuInflater inflater = getSupportMenuInflater();
-//       inflater.inflate(R.menu.universidad, menu);
-//       return super.onCreateOptionsMenu(menu);
-//    }
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+       MenuInflater inflater = getSupportMenuInflater();
+       return super.onCreateOptionsMenu(menu);
+    }
 
 }
