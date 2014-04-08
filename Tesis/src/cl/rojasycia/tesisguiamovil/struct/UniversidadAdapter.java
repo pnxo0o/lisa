@@ -1,4 +1,4 @@
-package cl.rojasycia.tesisguiamovil.universidad.struct;
+package cl.rojasycia.tesisguiamovil.struct;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class UniversidadAdapter extends ArrayAdapter<UniversidadItem> {
 	 *            Datos que se desean visualizar en el ListView.
 	 */
 	public UniversidadAdapter(Context context, ArrayList<UniversidadItem> datos) {
-		super(context, R.layout.item_universidad, datos);
+		super(context, R.layout.item_listuniversidad, datos);
 		// Guardamos los parámetros en variables de clase.
 		this.context = context;
 		this.datos = datos;
@@ -36,7 +36,7 @@ public class UniversidadAdapter extends ArrayAdapter<UniversidadItem> {
 		// En primer lugar "inflamos" una nueva vista, que será la que se
 		// mostrará en la celda del ListView.
 		View item = LayoutInflater.from(context).inflate(
-				R.layout.item_universidad, null);
+				R.layout.item_listuniversidad, null);
 
 		// A partir de la vista, recogeremos los controles que contiene para
 		// poder manipularlos.

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import cl.rojasycia.tesisguiamovil.R;
-import cl.rojasycia.tesisguiamovil.universidad.struct.*;
+import cl.rojasycia.tesisguiamovil.struct.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;

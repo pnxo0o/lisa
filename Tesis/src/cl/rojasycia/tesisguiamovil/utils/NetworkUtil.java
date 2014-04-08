@@ -1,4 +1,4 @@
-package cl.rojasycia.tesisguiamovil.universidad.utils;
+package cl.rojasycia.tesisguiamovil.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

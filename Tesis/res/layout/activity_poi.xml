@@ -5,24 +5,5 @@
     android:background="?android:attr/windowBackground"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/txtitulo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:padding="15dp"
-        android:text="HOLA"
-        android:textAppearance="@android:style/TextAppearance.Medium"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/txdescripcion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:textSize="14dip"
-        android:text="CHAO"
-        android:fontFamily="sans-serif-light"
-        android:textAppearance="@android:style/TextAppearance.Medium" />
 
 </LinearLayout>

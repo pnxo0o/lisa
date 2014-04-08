@@ -1,4 +1,4 @@
-package cl.rojasycia.tesisguiamovil.universidad.struct;
+package cl.rojasycia.tesisguiamovil.struct;
 
 
 public class UniversidadItem {
