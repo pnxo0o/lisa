@@ -29,7 +29,7 @@
         
         <activity 
             android:name="cl.rojasycia.tesisguiamovil.ui.InfUniversidadActivity"
-            android:theme="@style/Theme.Sherlock.TranslucentActionBar">
+            android:theme="@style/Theme.Gmovilgreen.TranslucentActionBar">
         </activity>
         
         

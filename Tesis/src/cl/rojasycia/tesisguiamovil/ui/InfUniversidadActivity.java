@@ -29,8 +29,18 @@ public class InfUniversidadActivity extends SherlockActivity {
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-       MenuInflater inflater = getSupportMenuInflater();
        return super.onCreateOptionsMenu(menu);
+    }
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case android.R.id.home:
+        	super.onBackPressed();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 
 }

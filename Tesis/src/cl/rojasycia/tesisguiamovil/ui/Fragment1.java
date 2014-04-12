@@ -37,27 +37,19 @@ public class Fragment1 extends SherlockFragment {
 		grupos.append(0, grupo0);
 
 		ListViewExpanableItems grupo1 = new ListViewExpanableItems("Alimentación");
-		grupo1.children.add("Paella");
-		grupo1.children.add("A la parrilla");
-		grupo1.children.add("Frito");
+		grupo1.children.add("Supermercado");
 		grupos.append(1, grupo1);
 
 		ListViewExpanableItems grupo2 = new ListViewExpanableItems("Alojamiento");
-		grupo2.children.add("Jamón, queso y ananá");
-		grupo2.children.add("Pollo, morrones y aceitunas");
-		grupo2.children.add("Carlitos");
+		grupo2.children.add("Hostal");
 		grupos.append(2, grupo2);
 		
 		ListViewExpanableItems grupo3 = new ListViewExpanableItems("Entretención");
-		grupo2.children.add("Jamón, queso y ananá");
-		grupo2.children.add("Pollo, morrones y aceitunas");
-		grupo2.children.add("Carlitos");
+		grupo3.children.add("Bar");
 		grupos.append(3, grupo3);
 		
 		ListViewExpanableItems grupo4 = new ListViewExpanableItems("Servicios");
-		grupo2.children.add("Jamón, queso y ananá");
-		grupo2.children.add("Pollo, morrones y aceitunas");
-		grupo2.children.add("Carlitos");
+		grupo4.children.add("Servicio Medico");
 		grupos.append(4, grupo4);
 	}
 
