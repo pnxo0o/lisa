@@ -9,5 +9,6 @@
     <string name="Fragment3">This is Fragment 3</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="buscar_aqui">Buscar en esta zona</string>
 
 </resources>

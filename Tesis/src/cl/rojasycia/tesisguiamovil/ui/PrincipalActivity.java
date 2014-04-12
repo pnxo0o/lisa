@@ -51,8 +51,8 @@ public class PrincipalActivity extends SherlockFragmentActivity {
 				  				   "La aplicación :)" };
 
 		// Generate icon
-		icon = new int[] { R.drawable.action_about, R.drawable.action_settings,
-				R.drawable.collections_cloud };
+		icon = new int[] { R.drawable.collections_cloud, R.drawable.action_settings,
+				R.drawable.action_about };
 
 		// Locate DrawerLayout in drawer_main.xml
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

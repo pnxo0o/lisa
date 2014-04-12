@@ -1,8 +1,6 @@
 package cl.rojasycia.tesisguiamovil.ui;
 
 
-//hiy
-//sdgfds 200
 
 import android.os.Bundle;
 import cl.rojasycia.tesisguiamovil.R;

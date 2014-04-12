@@ -15,7 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="@string/Fragment1" />
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:text="@string/buscar_aqui" />
 
     <LinearLayout
         android:id="@+id/LinearLayout1"

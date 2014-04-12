@@ -58,7 +58,6 @@ public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 				Toast.makeText(context, children + " - Item: " + groupPosition + " - Subitem:" + childPosition, Toast.LENGTH_SHORT).show();
 			}
 		});
-		Log.e("error","xdddd");
 		return convertView;
 	}
 
