@@ -16,8 +16,11 @@
 
 package com.actionbarsherlock.internal.widget;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.os.Build;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.util.AttributeSet;
@@ -47,6 +50,8 @@ import android.widget.ListView;
  * <a href="{@docRoot}guide/topics/ui/binding.html">Binding to Data with AdapterView</a>
  * developer guide.</p></div>
  */
+@SuppressLint("WrongCall")
+@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public abstract class IcsAdapterView<T extends Adapter> extends ViewGroup {
 
     /**
