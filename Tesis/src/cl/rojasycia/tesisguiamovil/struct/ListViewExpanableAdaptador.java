@@ -24,7 +24,7 @@ public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 	}
 
 	// Nos devuelve los datos asociados a un subitem en base
-	// a la posición
+	// a la posiciónç
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
 		return grupos.get(groupPosition).children.get(childPosition);
