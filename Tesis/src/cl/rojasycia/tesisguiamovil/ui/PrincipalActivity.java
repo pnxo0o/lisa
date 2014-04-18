@@ -47,7 +47,7 @@ public class PrincipalActivity extends SherlockFragmentActivity {
 
 		// Generate subtitle
 		subtitle = new String[] { "Encuentre lugares",
-								  "Ubicaciones y noticias",
+								  "Y noticias",
 				  				   "La aplicación :)" };
 
 		// Generate icon

@@ -52,6 +52,8 @@ public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 		textvw = (TextView) convertView.findViewById(R.id.textView1);
 		textvw.setText(children);
 		
+		
+		
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -101,11 +103,30 @@ public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
+		
+		TextView textvw = null;
+		
+		
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).inflate(
 					R.layout.items_categoria_layout, null);
 					//inflater.inflate(R.layout.items_categoria_layout, null);
 		}
+		
+		textvw = (TextView) convertView.findViewById(R.id.textView1);
+		switch (groupPosition){
+		case 0:
+		      textvw.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_universidad, 0);
+		      break;
+		case 1:
+		      textvw.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_alimentacion, 0);
+		      break;
+		case 2:
+		      textvw.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_alojamiento, 0);
+		      break;
+		
+		}
+		
 		ListViewExpanableItems grupo = (ListViewExpanableItems) getGroup(groupPosition);
 		((CheckedTextView) convertView).setText(grupo.string);
 		((CheckedTextView) convertView).setChecked(isExpanded);
