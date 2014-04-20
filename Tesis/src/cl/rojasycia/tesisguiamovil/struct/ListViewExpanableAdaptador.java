@@ -124,7 +124,12 @@ public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 		case 2:
 		      textvw.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_alojamiento, 0);
 		      break;
-		
+		case 3:
+		      textvw.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_entretencion, 0);
+		      break;      
+		case 4:
+		      textvw.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_servicios, 0);
+		      break;
 		}
 		
 		ListViewExpanableItems grupo = (ListViewExpanableItems) getGroup(groupPosition);
