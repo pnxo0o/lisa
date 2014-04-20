@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import cl.rojasycia.tesisguiamovil.R;
+import cl.rojasycia.tesisguiamovil.model.Universidad;
 import cl.rojasycia.tesisguiamovil.struct.*;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,16 +39,16 @@ public class Fragment2 extends SherlockFragment {
             public void onItemClick(AdapterView<?> parent, View v, int posicion, long id) {
             	switch (posicion){
             	case 0:
-            		lanzarUniversidad(posicion);
+            		lanzarUniversidad(Universidad.UPLA);
             		break;
             	case 1:
-            		lanzarUniversidad(posicion);
+            		lanzarUniversidad(Universidad.UV);
             		break;
             	case 2:
-            		lanzarUniversidad(posicion);
+            		lanzarUniversidad(Universidad.USM);
             		break;
             	case 3:
-            		lanzarUniversidad(posicion);
+            		lanzarUniversidad(Universidad.PUCV);
             		break;
             	}
             }
@@ -60,7 +61,7 @@ public class Fragment2 extends SherlockFragment {
 	public void lanzarUniversidad(int a){
 		Intent intent;
 		intent = new Intent(getActivity(), InfUniversidadActivity.class);
-//		intent.putExtra("universidad_elegida", a);
+		intent.putExtra("universidad_elegida", a);
 		startActivity(intent);
 	}
 
@@ -71,20 +72,5 @@ public class Fragment2 extends SherlockFragment {
 		arrayUniversidades.add(new UniversidadItem("Pontificia Universidad Católica de Valparaiso", R.drawable.u_pucv));
 	}
 
-//	 private class AsyncLoadUniv extends AsyncTask<Void, Integer, Boolean>{
-//
-//
-//		 @Override
-//		    protected Boolean doInBackground(Void... params) {
-//		        
-//				
-//				return true;
-//		    }
-//			
-//		 @Override
-//		    protected void onPostExecute(Boolean result) {
-//		        
-//		    }
-//		}
 
 }

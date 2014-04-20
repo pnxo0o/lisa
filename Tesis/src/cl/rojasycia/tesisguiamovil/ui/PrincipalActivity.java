@@ -2,11 +2,12 @@ package cl.rojasycia.tesisguiamovil.ui;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import cl.rojasycia.tesisguiamovil.R;
 
+import cl.rojasycia.tesisguiamovil.R;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -46,9 +47,9 @@ public class PrincipalActivity extends SherlockFragmentActivity {
 							   "Acerca de" };
 
 		// Generate subtitle
-		subtitle = new String[] { "Encuentre lugares",
-								  "Y noticias",
-				  				   "La aplicación :)" };
+		subtitle = new String[] { "encuentre lugares",
+								  "y noticias",
+				  				   "la aplicación :)" };
 
 		// Generate icon
 		icon = new int[] { R.drawable.collections_cloud, R.drawable.action_settings,
@@ -103,6 +104,9 @@ public class PrincipalActivity extends SherlockFragmentActivity {
 		if (savedInstanceState == null) {
 			selectItem(0);
 		}
+		
+		//fondo drawer
+		mDrawerList.setBackgroundResource(R.drawable.fondo_drawer);
 	}
 
 	@Override

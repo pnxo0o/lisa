@@ -9,16 +9,19 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <Button
-        android:id="@+id/btnBuscarAqui"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:onClick="buscarAqui"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp"
-        android:text="@string/buscar_aqui" />
+
+    	<Button
+        	android:id="@+id/btnBuscarAqui"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentTop="true"
+        	android:onClick="buscarAqui"
+        	android:paddingBottom="15dp"
+        	android:paddingTop="15dp"
+        	android:text="@string/buscar_aqui" />
+    
+
 
     <LinearLayout
         android:id="@+id/LinearLayout1"
@@ -33,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
         </ExpandableListView>
+
     </LinearLayout>
 
 </RelativeLayout>
