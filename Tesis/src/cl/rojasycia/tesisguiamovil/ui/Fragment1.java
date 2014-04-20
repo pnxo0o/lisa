@@ -5,7 +5,9 @@ import com.actionbarsherlock.app.SherlockFragment;
 import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.struct.ListViewExpanableAdaptador;
 import cl.rojasycia.tesisguiamovil.struct.ListViewExpanableItems;
+import cl.rojasycia.tesisguiamovil.utils.GPSTracker;
 import cl.rojasycia.tesisguiamovil.utils.NetworkUtil;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -20,6 +22,9 @@ public class Fragment1 extends SherlockFragment {
 	
 	SparseArray<ListViewExpanableItems> grupos = new SparseArray<ListViewExpanableItems>();
 	Button btnBuscarAqui;
+	GPSTracker ubicacion;
+	double latitude;
+	double longitude;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +83,52 @@ public class Fragment1 extends SherlockFragment {
 	 * y busca puntos de interes
 	 */
 	public void buscarAqui() {
-        Toast.makeText(getActivity(), NetworkUtil.getConnectivityStatus(getActivity()), Toast.LENGTH_SHORT).show();
+		if(NetworkUtil.getConnectivityStatus(getActivity())==0){
+			Toast.makeText(getActivity(), "Revise su conexión a internet", Toast.LENGTH_SHORT).show();
+		}
+		else{
+			AsyncLatLong task = new AsyncLatLong();
+	        task.execute();
+        	
+		}
+        
     }
+	
+	private class AsyncLatLong extends AsyncTask<String, Void, Integer>{
+		
+		double latitude;
+		double longitude;
+		
+		@Override
+        protected void onPreExecute() {
+            // Avísele al usuario que estamos trabajando
+			ubicacion = new GPSTracker(getActivity().getApplication());
+        }
+ 
+        @Override
+        protected Integer doInBackground(String... params) {
+            // Aquí hacemos una tarea laaarga
+	
+	        if(ubicacion.canGetLocation()){
+	        	latitude = ubicacion.getLatitude();
+	        	longitude = ubicacion.getLongitude();
+	        	return 0;
+	        }
+	        else{
+	        	return 1;
+	        }
+        }
+ 
+        @Override
+        protected void onPostExecute(Integer result) {
+            // Aquí actualizamos la UI con el resultado
+        	if(result==0){
+        		Toast.makeText(getActivity(), "La ubicación es - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        	}
+        	else{
+        		//error
+        		ubicacion.showSettingsAlert();
+        	}
+        }
+	}
 }
