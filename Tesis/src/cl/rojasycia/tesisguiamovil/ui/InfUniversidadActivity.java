@@ -7,7 +7,6 @@ import cl.rojasycia.tesisguiamovil.R;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.manuelpeinado.fadingactionbar.extras.actionbarsherlock.FadingActionBarHelper;
 

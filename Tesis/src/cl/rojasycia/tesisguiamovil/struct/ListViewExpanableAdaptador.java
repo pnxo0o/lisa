@@ -2,7 +2,6 @@ package cl.rojasycia.tesisguiamovil.struct;
 
 import cl.rojasycia.tesisguiamovil.R;
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
