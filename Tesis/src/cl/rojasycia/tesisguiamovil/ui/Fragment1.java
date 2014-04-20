@@ -7,8 +7,12 @@ import cl.rojasycia.tesisguiamovil.struct.ListViewExpanableAdaptador;
 import cl.rojasycia.tesisguiamovil.struct.ListViewExpanableItems;
 import cl.rojasycia.tesisguiamovil.utils.GPSTracker;
 import cl.rojasycia.tesisguiamovil.utils.NetworkUtil;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +27,7 @@ public class Fragment1 extends SherlockFragment {
 	SparseArray<ListViewExpanableItems> grupos = new SparseArray<ListViewExpanableItems>();
 	Button btnBuscarAqui;
 	GPSTracker ubicacion;
-	double latitude;
+	double latitude = 1.0;
 	double longitude;
 	
 	@Override
@@ -96,22 +100,41 @@ public class Fragment1 extends SherlockFragment {
 	
 	private class AsyncLatLong extends AsyncTask<String, Void, Integer>{
 		
-		double latitude;
-		double longitude;
+		Thread a;
 		
 		@Override
         protected void onPreExecute() {
             // Avísele al usuario que estamos trabajando
 			ubicacion = new GPSTracker(getActivity().getApplication());
+			
+			a = new Thread(new Runnable() {
+			    public void run() {
+					try {
+						Thread.sleep(6000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+				}
+			    	
+			 });
         }
  
         @Override
         protected Integer doInBackground(String... params) {
-            // Aquí hacemos una tarea laaarga
-	
+            // Aquí hacemos las tareas 
+        	
 	        if(ubicacion.canGetLocation()){
-	        	latitude = ubicacion.getLatitude();
-	        	longitude = ubicacion.getLongitude();
+	        	if(NetworkUtil.getConnectivityStatus(getActivity())==1){
+	        		latitude = ubicacion.getLatitude();
+		        	longitude = ubicacion.getLongitude();
+	        	}
+	        	else{
+	        		a.run();
+		        	latitude = ubicacion.getLatitude();
+		        	longitude = ubicacion.getLongitude();
+		        	ubicacion.stopUsingGPS();
+	        	}
 	        	return 0;
 	        }
 	        else{
@@ -126,8 +149,7 @@ public class Fragment1 extends SherlockFragment {
         		Toast.makeText(getActivity(), "La ubicación es - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
         	}
         	else{
-        		//error
-        		ubicacion.showSettingsAlert();
+        		ubicacion.showSettingsAlert(getActivity());
         	}
         }
 	}

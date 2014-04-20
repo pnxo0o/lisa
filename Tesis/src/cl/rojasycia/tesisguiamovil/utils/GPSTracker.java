@@ -77,7 +77,7 @@ public class GPSTracker extends Service implements LocationListener {
 			}
 			else if(NetworkUtil.getConnectivityStatus(context)==2){
 				if(GPSStatus()==false){
-					showSettingsAlert();
+//					showSettingsAlert(context);
 				}
 				else{
 				if (isGPSEnabled) {
@@ -94,7 +94,6 @@ public class GPSTracker extends Service implements LocationListener {
 							if (location != null) {
 								latitude = location.getLatitude();
 								longitude = location.getLongitude();
-								location = null;
 							}
 						}
 					}
@@ -162,10 +161,10 @@ public class GPSTracker extends Service implements LocationListener {
 	
 	/**
 	 * Function to show settings alert dialog
-	 * On pressing Settings button will lauch Settings Options
+	 * On pressing Settings button will launch Settings Options
 	 * */
-	public void showSettingsAlert(){
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+	public void showSettingsAlert(Context cont){
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(cont);
    	 
         // Titulo
         alertDialog.setTitle("GPS no activado");
@@ -177,7 +176,9 @@ public class GPSTracker extends Service implements LocationListener {
         alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog,int which) {
             	Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             	context.startActivity(intent);
+            	
             }
         });
  
