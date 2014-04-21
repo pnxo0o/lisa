@@ -24,6 +24,7 @@ public class Universidad {
 	private String descripcionUniversidad;
 	private String urlUniversidad;
 	private int imagenUniversidad;
+	private int logoUniversidad;
 	
 	public Universidad(int universidad, Context context) {
 		super();
