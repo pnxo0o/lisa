@@ -22,6 +22,7 @@ public class InfUniversidadActivity extends SherlockActivity {
 	private TextView descripcionUniversidad;
 	private TextView urlUniversidad;
 	private ImageView imgUniversidad;
+	private ImageView logoUniversidad;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +45,14 @@ public class InfUniversidadActivity extends SherlockActivity {
         urlUniversidad = (TextView)findViewById(R.id.txUrlUniversidad);
         descripcionUniversidad = (TextView)findViewById(R.id.txDescripcionUniversidad);
         imgUniversidad = (ImageView)findViewById(R.id.image_header);
+        logoUniversidad = (ImageView)findViewById(R.id.logoUniversidad);
         
         getSupportActionBar().setTitle(u.getNombreUniversidad());
         tituloUniversidad.setText(u.getNombreUniversidad());
         urlUniversidad.setText(u.getUrl());
         descripcionUniversidad.setText(u.getDescripcion());
         imgUniversidad.setImageResource(u.getImagenUniversidad());
+        logoUniversidad.setImageResource(u.getLogoUniversidad());
 
         urlUniversidad.setText(u.getUrl());
         Linkify.addLinks(urlUniversidad, Linkify.ALL);

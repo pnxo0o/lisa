@@ -38,18 +38,22 @@ public class Universidad {
             case UPLA:
             	is = context.getResources().openRawResource(R.raw.datos_upla);
             	setImagenUniversidad(R.drawable.wall_upla);
+            	setLogoUniversidad(R.drawable.u_upla);
             	break;
             case UV:
             	is = context.getResources().openRawResource(R.raw.datos_uv);
             	setImagenUniversidad(R.drawable.wall_uv);
+            	setLogoUniversidad(R.drawable.u_uv);
             	break;
             case USM:
             	is = context.getResources().openRawResource(R.raw.datos_usm);
             	setImagenUniversidad(R.drawable.wall_usm);
+            	setLogoUniversidad(R.drawable.u_usm);
             	break;
             case PUCV:
             	is = context.getResources().openRawResource(R.raw.datos_pucv);
             	setImagenUniversidad(R.drawable.wall_pucv);
+            	setLogoUniversidad(R.drawable.u_pucv);
             	break;
             }
 
@@ -113,6 +117,14 @@ public class Universidad {
 		this.imagenUniversidad = imagenUniversidad;
 	}
 	
+	public int getLogoUniversidad() {
+		return logoUniversidad;
+	}
+
+	public void setLogoUniversidad(int logoUniversidad) {
+		this.logoUniversidad = logoUniversidad;
+	}
+
 	private String obtenerTextoDeNodo(Node dato)
     {
             StringBuilder texto = new StringBuilder();

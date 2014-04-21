@@ -21,8 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/logoUniv"
-        android:layout_marginBottom="30dp"
         android:layout_toRightOf="@+id/logoUniv"
+        android:layout_marginBottom="30dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:text="sxxs" />
 
