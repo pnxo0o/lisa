@@ -76,14 +76,10 @@ public class GPSTracker extends Service implements LocationListener {
 				}
 			}
 			else if(NetworkUtil.getConnectivityStatus(context)==2){
-				if(GPSStatus()==false){
-//					showSettingsAlert(context);
-				}
-				else{
+				if(GPSStatus()==true){
 				if (isGPSEnabled) {
 					this.canGetLocation = true;
 					if (location == null) {
-						
 						locationManager.requestLocationUpdates(
 								LocationManager.GPS_PROVIDER,
 								MIN_TIME_BW_UPDATES,
@@ -110,10 +106,10 @@ public class GPSTracker extends Service implements LocationListener {
 		return location;
 	}
 	
-	@SuppressWarnings("deprecation")
-	private Boolean GPSStatus() {  
-		  ContentResolver contentResolver = context.getContentResolver();  
-		  boolean gpsStatus = Settings.Secure.isLocationProviderEnabled(contentResolver,LocationManager.GPS_PROVIDER);  
+
+	private Boolean GPSStatus() {
+		  boolean gpsStatus = locationManager
+					.isProviderEnabled(LocationManager.GPS_PROVIDER);  
 		  if (gpsStatus) {
 			  return true;  
 		  } else {  

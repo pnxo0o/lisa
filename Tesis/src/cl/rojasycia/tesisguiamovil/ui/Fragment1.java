@@ -7,6 +7,7 @@ import cl.rojasycia.tesisguiamovil.struct.ListViewExpanableAdaptador;
 import cl.rojasycia.tesisguiamovil.struct.ListViewExpanableItems;
 import cl.rojasycia.tesisguiamovil.utils.GPSTracker;
 import cl.rojasycia.tesisguiamovil.utils.NetworkUtil;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -23,7 +24,7 @@ public class Fragment1 extends SherlockFragment {
 	SparseArray<ListViewExpanableItems> grupos = new SparseArray<ListViewExpanableItems>();
 	Button btnBuscarAqui;
 	GPSTracker ubicacion;
-	double latitude = 1.0;
+	double latitude;
 	double longitude;
 	
 	@Override
@@ -94,6 +95,14 @@ public class Fragment1 extends SherlockFragment {
         
     }
 	
+	public void lanzarMapa(double latitud, double longitud){
+		Intent intent;
+		intent = new Intent(getActivity(), MapPOIActivity.class);
+		intent.putExtra("latitud", latitud);
+		intent.putExtra("longitud", longitud);
+		startActivity(intent);
+	}
+	
 	private class AsyncLatLong extends AsyncTask<String, Void, Integer>{
 		
 		Thread a;
@@ -124,12 +133,14 @@ public class Fragment1 extends SherlockFragment {
 	        	if(NetworkUtil.getConnectivityStatus(getActivity())==1){
 	        		latitude = ubicacion.getLatitude();
 		        	longitude = ubicacion.getLongitude();
+		        	if(latitude == 0.0 && longitude == 0.0) return 1;
 	        	}
 	        	else{
 	        		a.run();
 		        	latitude = ubicacion.getLatitude();
 		        	longitude = ubicacion.getLongitude();
 		        	ubicacion.stopUsingGPS();
+		        	if(latitude == 0.0 && longitude == 0.0) return 1;
 	        	}
 	        	return 0;
 	        }
@@ -143,10 +154,13 @@ public class Fragment1 extends SherlockFragment {
             // Aquí actualizamos la UI con el resultado
         	if(result==0){
         		Toast.makeText(getActivity(), "La ubicación es - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        		lanzarMapa(latitude, longitude);
         	}
         	else{
         		ubicacion.showSettingsAlert(getActivity());
         	}
         }
 	}
+	
+	
 }
