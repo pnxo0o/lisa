@@ -23,6 +23,7 @@ public class Universidad {
 	private String nombreUniversidad;
 	private String descripcionUniversidad;
 	private String urlUniversidad;
+	private String feedUniversidad;
 	private int imagenUniversidad;
 	private int logoUniversidad;
 	
@@ -31,8 +32,8 @@ public class Universidad {
 		
 		try{
         	InputStream is = null;
-        	NodeList titulo, descripcion, url;
-        	Node item_titulo, item_descripcion, item_url;
+        	NodeList titulo, descripcion, url, feed;
+        	Node item_titulo, item_descripcion, item_url, item_feed;
         	
         	switch (universidad){
             case UPLA:
@@ -68,14 +69,17 @@ public class Universidad {
             titulo = root.getElementsByTagName("titulo");
             descripcion = root.getElementsByTagName("descripcion");
             url = root.getElementsByTagName("url");
+            feed = root.getElementsByTagName("feed");
             
             item_titulo = titulo.item(0);
             item_descripcion=descripcion.item(0);
             item_url=url.item(0);
+            item_feed=feed.item(0);
             
             setNombreUniversidad(obtenerTextoDeNodo(item_titulo));
             setDescripcion(obtenerTextoDeNodo(item_descripcion));
             setUrl(obtenerTextoDeNodo(item_url));
+            setFeedUniversidad(obtenerTextoDeNodo(item_feed));
             
         }
         catch (Exception ex)
@@ -123,6 +127,18 @@ public class Universidad {
 
 	public void setLogoUniversidad(int logoUniversidad) {
 		this.logoUniversidad = logoUniversidad;
+	}
+
+	public String getFeedUniversidad() {
+		return feedUniversidad;
+	}
+
+	public void setFeedUniversidad(String feedUniversidad) {
+		this.feedUniversidad = feedUniversidad;
+	}
+	
+	public static void descargarNoticiasDeUniversidad(String feed){
+		
 	}
 
 	private String obtenerTextoDeNodo(Node dato)

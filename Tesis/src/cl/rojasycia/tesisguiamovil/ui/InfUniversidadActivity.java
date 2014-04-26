@@ -1,7 +1,5 @@
 package cl.rojasycia.tesisguiamovil.ui;
 
-
-
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.widget.ImageView;
@@ -11,6 +9,7 @@ import cl.rojasycia.tesisguiamovil.model.Universidad;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.manuelpeinado.fadingactionbar.extras.actionbarsherlock.FadingActionBarHelper;
 
@@ -61,6 +60,8 @@ public class InfUniversidadActivity extends SherlockActivity {
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
+       MenuInflater inflater = getSupportMenuInflater();
+       inflater.inflate(R.menu.noticias_menu, menu);
        return super.onCreateOptionsMenu(menu);
     }
 	

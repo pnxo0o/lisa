@@ -11,5 +11,6 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="buscar_aqui">Buscar en esta zona</string>
     <string name="linksitio">sitio web</string>
+    <string name="leer_noticias">Leer Noticias</string>
 
 </resources>

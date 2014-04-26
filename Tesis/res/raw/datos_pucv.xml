@@ -2,4 +2,5 @@
         <titulo>Pontificia Universidad Católica de Valparaíso</titulo>
         <descripcion>La Pontificia Universidad Católica de Valparaíso, conocida como PUCV o simplemente UCV, es una de las seis universidades católicas de Chile, y una de las tres universidades eclesiásticas presentes en el país junto a la Pontificia Universidad Católica de Chile y la Universidad Católica de la Santísima Concepción, fue la primera fundada fuera de la capital. Pertenece a la Red Universitaria Cruz del Sur, a la Agrupación de Universidades Regionales de Chile, al Consejo de Rectores de las Universidades Chilenas y a la Red Universitaria G9, además se encuentra acreditada por la Comisión Nacional de Acreditación en todas las áreas que esta entidad evalúa. Considerada como Institución Universitaria Compleja por su alto desarrollo formativo e investigativo. Es considerada una entidad tradicional de alto prestigio académico, y es privada-tradicional con aporte estatal.</descripcion>
         <url>http://www.ucv.cl/</url>
+        <feed>http://prensa.ucv.cl/?feed=rss2</feed>
 </datosuniversidad>

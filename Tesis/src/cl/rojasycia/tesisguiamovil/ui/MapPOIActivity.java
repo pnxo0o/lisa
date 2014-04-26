@@ -32,7 +32,6 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 		mapa = ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 		mapa.moveCamera(CameraUpdateFactory.zoomTo(13));
 		
-		
 		latLongUsuario = new LatLng (latitud, longitud);
 		mapa.addMarker(new MarkerOptions().position(latLongUsuario));
 		mapa.animateCamera(CameraUpdateFactory.newLatLng(latLongUsuario), 200, null);
