@@ -2,7 +2,6 @@ package cl.rojasycia.tesisguiamovil.utils;
 
 import android.app.AlertDialog;
 import android.app.Service;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,8 +22,11 @@ public class GPSTracker extends Service implements LocationListener {
 	// bandera para estad de red
 	boolean isNetworkEnabled = false;
 
-	// bandera para locacion GPS
+	// bandera para locacion 
 	boolean canGetLocation = false;
+	
+	//determinar tipo de conexion
+	int typeLocation = NetworkUtil.TYPE_NOT_CONNECTED;
 
 	Location location; // localizacion
 	double latitude; // latitud
@@ -39,13 +41,14 @@ public class GPSTracker extends Service implements LocationListener {
 	// Location Manager
 	protected LocationManager locationManager;
 
-	public GPSTracker(Context context) {
+	public GPSTracker(Context context, int typeLocation) {
 		this.context = context;
+		this.typeLocation = typeLocation;
 		getLocation();
 	}
 
 	public Location getLocation() {
-		try {
+//		try {
 			
 			locationManager = (LocationManager) context
 					.getSystemService(LOCATION_SERVICE);
@@ -53,12 +56,14 @@ public class GPSTracker extends Service implements LocationListener {
 			// Obteniendo estado GPS
 			isGPSEnabled = locationManager
 					.isProviderEnabled(LocationManager.GPS_PROVIDER);
+			
 
 			// Obteniendo estado de red
 			isNetworkEnabled = locationManager
 					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-			if(NetworkUtil.getConnectivityStatus(context)==1){
+
+			if(this.typeLocation==NetworkUtil.TYPE_WIFI){
 				this.canGetLocation = true;
 				if (isNetworkEnabled) {
 					locationManager.requestLocationUpdates(
@@ -75,8 +80,8 @@ public class GPSTracker extends Service implements LocationListener {
 					}
 				}
 			}
-			else if(NetworkUtil.getConnectivityStatus(context)==2){
-				if(GPSStatus()==true){
+
+			if(this.typeLocation==NetworkUtil.TYPE_MOBILE){
 				if (isGPSEnabled) {
 					this.canGetLocation = true;
 					if (location == null) {
@@ -94,28 +99,15 @@ public class GPSTracker extends Service implements LocationListener {
 						}
 					}
 				}
-				}
-
 			}
-			
-			
-		 } 
-		catch (Exception e) {
-	            e.printStackTrace();
-	     }
+//		 } 
+//		catch (Exception e) {
+//	            e.printStackTrace();
+//	     }
 		return location;
 	}
 	
-
-	private Boolean GPSStatus() {
-		  boolean gpsStatus = locationManager
-					.isProviderEnabled(LocationManager.GPS_PROVIDER);  
-		  if (gpsStatus) {
-			  return true;  
-		  } else {  
-			  return false;  
-		  }  
-		 }  
+	
 	
 	/**
 	 * Stop using GPS listener

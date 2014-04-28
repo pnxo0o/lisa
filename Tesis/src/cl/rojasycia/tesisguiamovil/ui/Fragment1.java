@@ -110,12 +110,12 @@ public class Fragment1 extends SherlockFragment {
 		@Override
         protected void onPreExecute() {
             // Avísele al usuario que estamos trabajando
-			ubicacion = new GPSTracker(getActivity().getApplication());
+			ubicacion = new GPSTracker(getActivity(), NetworkUtil.getConnectivityStatus(getActivity()));
 			
 			a = new Thread(new Runnable() {
 			    public void run() {
 					try {
-						Thread.sleep(6000);
+						Thread.sleep(5000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -130,17 +130,17 @@ public class Fragment1 extends SherlockFragment {
             // Aquí hacemos las tareas 
         	
 	        if(ubicacion.canGetLocation()){
-	        	if(NetworkUtil.getConnectivityStatus(getActivity())==1){
+	        	if(NetworkUtil.getConnectivityStatus(getActivity())==NetworkUtil.TYPE_WIFI){
 	        		latitude = ubicacion.getLatitude();
 		        	longitude = ubicacion.getLongitude();
 		        	if(latitude == 0.0 && longitude == 0.0) return 1;
 	        	}
 	        	else{
 	        		a.run();
-		        	latitude = ubicacion.getLatitude();
+	        		latitude = ubicacion.getLatitude();
 		        	longitude = ubicacion.getLongitude();
 		        	ubicacion.stopUsingGPS();
-		        	if(latitude == 0.0 && longitude == 0.0) return 1;
+		        	//if(latitude == 0.0 && longitude == 0.0) return 1;
 	        	}
 	        	return 0;
 	        }

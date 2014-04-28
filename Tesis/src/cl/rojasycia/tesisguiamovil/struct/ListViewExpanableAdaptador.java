@@ -50,7 +50,25 @@ public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 		}
 		textvw = (TextView) convertView.findViewById(R.id.textView1);
 		textvw.setText(children);
-		
+//		switch (groupPosition){
+//		case 0:
+//		   switch (childPosition){
+//		   case 0:
+//		      textvw.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_launcher, 0);
+//		      break;
+//		   case 1:
+//		      textvw.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_launcher, 0);
+//		      break;
+//		   }
+//		break;
+//		case 1:
+//		   switch (childPosition){
+//		   case 0:
+//		      textvw.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_launcher, 0);
+//		      break;
+//		   }
+//		break;
+//		}
 		
 		
 		convertView.setOnClickListener(new OnClickListener() {
