@@ -71,12 +71,12 @@ public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 //		}
 		
 		
-		convertView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(context, children + " - Item: " + groupPosition + " - Subitem:" + childPosition, Toast.LENGTH_SHORT).show();
-			}
-		});
+//		convertView.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				Toast.makeText(context, children + " - Item: " + groupPosition + " - Subitem:" + childPosition, Toast.LENGTH_SHORT).show();
+//			}
+//		});
 		return convertView;
 	}
 
@@ -127,7 +127,6 @@ public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).inflate(
 					R.layout.items_categoria_layout, null);
-					//inflater.inflate(R.layout.items_categoria_layout, null);
 		}
 		
 		textvw = (TextView) convertView.findViewById(R.id.textView1);
@@ -163,6 +162,8 @@ public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 	//Nos informa si es seleccionable o no un ítem o subitem
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
-		return false;
+		return true;
 	}
+	
+
 }

@@ -33,10 +33,10 @@ public class GPSTracker extends Service implements LocationListener {
 	double longitude; // longitud
 
 	// Minima distancia para cambiar actualizacion 
-	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 metros
+	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 3; // 3 metros
 
 	// Minimo tiempo para actualizar
-	private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minuto
+	private static final long MIN_TIME_BW_UPDATES = 1000 * 25 * 1; // 25 seg
 
 	// Location Manager
 	protected LocationManager locationManager;

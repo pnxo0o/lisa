@@ -7,5 +7,6 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="/ABS/libs/android-support-v4.jar"/>
 	<classpathentry kind="lib" path="libs/jdom-1.0.jar"/>
+	<classpathentry kind="lib" path="libs/geonames-1.1.11.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

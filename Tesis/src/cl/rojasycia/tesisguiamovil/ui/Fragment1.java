@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
 public class Fragment1 extends SherlockFragment {
@@ -36,6 +37,7 @@ public class Fragment1 extends SherlockFragment {
 		ExpandableListView listaExpandible = (ExpandableListView) rootView.findViewById(R.id.listViewexp);
 		ListViewExpanableAdaptador adapter = new ListViewExpanableAdaptador(getActivity(), grupos);
 		listaExpandible.setAdapter(adapter);
+
 		
 		btnBuscarAqui = (Button) rootView.findViewById(R.id.btnBuscarAqui);
 		btnBuscarAqui.setOnClickListener(new OnClickListener(){
