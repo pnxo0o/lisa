@@ -23,7 +23,6 @@ public class Fragment1 extends SherlockFragment implements TaskFragment.TaskCall
 	private SparseArray<ListViewExpanableItems> grupos = new SparseArray<ListViewExpanableItems>();
 	private Button btnBuscarAqui;
 	
-	
 	private ProgressDialog mProgressDialog;
 	
 	//nuevas variables
@@ -35,6 +34,10 @@ public class Fragment1 extends SherlockFragment implements TaskFragment.TaskCall
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment1, container, false);
+		
+		mProgressDialog = new ProgressDialog(getActivity());
+		mProgressDialog.setMessage("Buscando...");
+		mProgressDialog.setCancelable(false);
 		
 		crearDatos();
 		ExpandableListView listaExpandible = (ExpandableListView) rootView.findViewById(R.id.listViewexp);
@@ -57,13 +60,6 @@ public class Fragment1 extends SherlockFragment implements TaskFragment.TaskCall
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
       super.onActivityCreated(savedInstanceState);
-      
-      if(savedInstanceState != null){
-    	  mProgressDialog = new ProgressDialog(getActivity());
-    	  mProgressDialog.setMessage("Buscando...");
-    	  mProgressDialog.setCancelable(false);
-    	  mProgressDialog.show();
-      }
 
       FragmentManager fm = getActivity().getSupportFragmentManager();
       mTaskFragment = (TaskFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
@@ -73,8 +69,10 @@ public class Fragment1 extends SherlockFragment implements TaskFragment.TaskCall
         mTaskFragment.setTargetFragment(this, 0);
         fm.beginTransaction().add(mTaskFragment, TAG_TASK_FRAGMENT).commit();
       }
-
       
+      if(mTaskFragment.isRunning()){
+    	  mProgressDialog.show();
+      }
     }
 
     @Override
@@ -121,9 +119,6 @@ public class Fragment1 extends SherlockFragment implements TaskFragment.TaskCall
 			Toast.makeText(getActivity(), "Revise su conexión a internet", Toast.LENGTH_SHORT).show();
 		}
 		else{
-			mProgressDialog = new ProgressDialog(getActivity());
-			mProgressDialog.setMessage("Buscando...");
-			mProgressDialog.setCancelable(false);
 			mProgressDialog.show();
 			mTaskFragment.start();
 		}
