@@ -15,7 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.support.v4.view.GravityCompat;
 
-public class PrincipalActivity extends SherlockFragmentActivity {
+public class PrincipalActivity extends SherlockFragmentActivity  {
 
 	// Declare Variables
 	DrawerLayout mDrawerLayout;
