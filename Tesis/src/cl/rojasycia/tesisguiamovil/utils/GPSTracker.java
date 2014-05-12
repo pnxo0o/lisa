@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.util.Log;
 
 public class GPSTracker extends Service implements LocationListener {
 
@@ -36,7 +37,7 @@ public class GPSTracker extends Service implements LocationListener {
 	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 3; // 3 metros
 
 	// Minimo tiempo para actualizar
-	private static final long MIN_TIME_BW_UPDATES = 1000 * 25 * 1; // 25 seg
+	private static final long MIN_TIME_BW_UPDATES = 1000 * 50 * 1; // 50sg
 
 	// Location Manager
 	protected LocationManager locationManager;
@@ -53,19 +54,10 @@ public class GPSTracker extends Service implements LocationListener {
 			locationManager = (LocationManager) context
 					.getSystemService(LOCATION_SERVICE);
 
-			// Obteniendo estado GPS
-			isGPSEnabled = locationManager
-					.isProviderEnabled(LocationManager.GPS_PROVIDER);
-			
-
-			// Obteniendo estado de red
-			isNetworkEnabled = locationManager
-					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
 
 			if(this.typeLocation==NetworkUtil.TYPE_WIFI){
 				this.canGetLocation = true;
-				if (isNetworkEnabled) {
+//				if (isNetworkEnabled) {
 					locationManager.requestLocationUpdates(
 							LocationManager.NETWORK_PROVIDER,
 							MIN_TIME_BW_UPDATES,
@@ -78,13 +70,13 @@ public class GPSTracker extends Service implements LocationListener {
 							longitude = location.getLongitude();
 						}
 					}
-				}
+//				}
 			}
 
 			if(this.typeLocation==NetworkUtil.TYPE_MOBILE){
-				if (isGPSEnabled) {
+//				if (isGPSEnabled) {
 					this.canGetLocation = true;
-					if (location == null) {
+//					if (location == null) {
 						locationManager.requestLocationUpdates(
 								LocationManager.GPS_PROVIDER,
 								MIN_TIME_BW_UPDATES,
@@ -96,9 +88,9 @@ public class GPSTracker extends Service implements LocationListener {
 								latitude = location.getLatitude();
 								longitude = location.getLongitude();
 							}
-						}
+//						}
 					}
-				}
+//				}
 			}
 //		 } 
 //		catch (Exception e) {
@@ -179,6 +171,16 @@ public class GPSTracker extends Service implements LocationListener {
  
         // Mostrar
         alertDialog.show();
+	}
+	
+	public boolean isGPSEnabled(){
+		locationManager = (LocationManager) context
+				.getSystemService(LOCATION_SERVICE);
+
+		// Obteniendo estado GPS
+		isGPSEnabled = locationManager
+				.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		return isGPSEnabled;
 	}
 
 	@Override

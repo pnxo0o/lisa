@@ -1,15 +1,28 @@
 package cl.rojasycia.tesisguiamovil.ui;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Iterator;
+import java.util.List;
+
+import org.geonames.FeatureClass;
+import org.geonames.Toponym;
+import org.geonames.WebService;
+
 import com.actionbarsherlock.app.SherlockFragment;
 
 import cl.rojasycia.tesisguiamovil.R;
+import cl.rojasycia.tesisguiamovil.model.Grupo;
 import cl.rojasycia.tesisguiamovil.struct.ListViewExpanableAdaptador;
 import cl.rojasycia.tesisguiamovil.struct.ListViewExpanableItems;
 import cl.rojasycia.tesisguiamovil.utils.GPSTracker;
 import cl.rojasycia.tesisguiamovil.utils.NetworkUtil;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,16 +30,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
 public class Fragment1 extends SherlockFragment {
 	
-	SparseArray<ListViewExpanableItems> grupos = new SparseArray<ListViewExpanableItems>();
-	Button btnBuscarAqui;
-	GPSTracker ubicacion;
-	double latitude;
-	double longitude;
+	private SparseArray<ListViewExpanableItems> grupos = new SparseArray<ListViewExpanableItems>();
+	private Button btnBuscarAqui;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +46,6 @@ public class Fragment1 extends SherlockFragment {
 		ExpandableListView listaExpandible = (ExpandableListView) rootView.findViewById(R.id.listViewexp);
 		ListViewExpanableAdaptador adapter = new ListViewExpanableAdaptador(getActivity(), grupos);
 		listaExpandible.setAdapter(adapter);
-
 		
 		btnBuscarAqui = (Button) rootView.findViewById(R.id.btnBuscarAqui);
 		btnBuscarAqui.setOnClickListener(new OnClickListener(){
@@ -57,6 +65,7 @@ public class Fragment1 extends SherlockFragment {
 	 */
 	public void crearDatos() {
 		ListViewExpanableItems grupo0 = new ListViewExpanableItems("Universidades");
+		grupo0.children.add("Universidades");
 		grupo0.children.add("Universidad de Playa Ancha de Ciencias de la Educación");
 		grupo0.children.add("Universidad de Valparaíso");
 		grupo0.children.add("Universidad Técnica Federico Santa María");
@@ -96,7 +105,7 @@ public class Fragment1 extends SherlockFragment {
 		}
         
     }
-	
+
 	public void lanzarMapa(double latitud, double longitud){
 		Intent intent;
 		intent = new Intent(getActivity(), MapPOIActivity.class);
@@ -104,26 +113,48 @@ public class Fragment1 extends SherlockFragment {
 		intent.putExtra("longitud", longitud);
 		startActivity(intent);
 	}
-	
+
 	private class AsyncLatLong extends AsyncTask<String, Void, Integer>{
-		
-		Thread a;
+
+		private Thread a5000, a2500;
+		private OutputStreamWriter fout;
+		private Grupo gp;
+		private StringBuilder sb;
+		private double latitude;
+		private double longitude;
+		private GPSTracker ubicacion;
 		
 		@Override
         protected void onPreExecute() {
-            // Avísele al usuario que estamos trabajando
 			ubicacion = new GPSTracker(getActivity(), NetworkUtil.getConnectivityStatus(getActivity()));
-			
-			a = new Thread(new Runnable() {
+			gp = new Grupo(0, 0);
+			try {
+				fout = new OutputStreamWriter(getActivity().openFileOutput("poi_descargados.xml", Context.MODE_PRIVATE));
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				Log.e("yo","cagamos escribiendo el xml culiao");
+			}
+			sb = new StringBuilder();
+			a5000 = new Thread(new Runnable() {
 			    public void run() {
 					try {
-						Thread.sleep(5000);
+						Thread.sleep(5100);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} 
 				}
-			    	
+
+			 });
+			a2500 = new Thread(new Runnable() {
+			    public void run() {
+					try {
+						Thread.sleep(2500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} 
+				}
+
 			 });
         }
  
@@ -133,17 +164,50 @@ public class Fragment1 extends SherlockFragment {
         	
 	        if(ubicacion.canGetLocation()){
 	        	if(NetworkUtil.getConnectivityStatus(getActivity())==NetworkUtil.TYPE_WIFI){
+	        		a2500.run();
 	        		latitude = ubicacion.getLatitude();
 		        	longitude = ubicacion.getLongitude();
-		        	if(latitude == 0.0 && longitude == 0.0) return 1;
+		        	if(latitude == 0.0 && longitude == 0.0) return 2;
 	        	}
 	        	else{
-	        		a.run();
+	        		if(!ubicacion.isGPSEnabled()) return 1;
+	        		a5000.run();
 	        		latitude = ubicacion.getLatitude();
 		        	longitude = ubicacion.getLongitude();
 		        	ubicacion.stopUsingGPS();
-		        	//if(latitude == 0.0 && longitude == 0.0) return 1;
+		        	if(latitude == 0.0 && longitude == 0.0) return 2;
 	        	}
+	        	 Log.e("yo","ya tengo el place");
+	        	
+	        	try {
+	        		WebService.setUserName("pnxo0o");
+					List<Toponym> searchResult = WebService.findNearby(latitude, longitude, 250.0 ,FeatureClass.S ,gp.getGrupo(), "es", 12);
+					if(searchResult.size()>0){
+						   Log.e("yo","ya baje las weas");
+						   Iterator<Toponym> iterador = searchResult.listIterator(); 
+						   while( iterador.hasNext() ) {
+							   Toponym b = (Toponym) iterador.next();
+							   sb.append("<poi>");
+							   sb.append("<nombre>" + b.getName() + "</nombre>");
+							   sb.append("<tipo>" + b.getFeatureCode() + "</tipo>");
+							   sb.append("<latitud>" + b.getLatitude() + "</latitud>");
+							   sb.append("<longitud>" + b.getLongitude() + "</longitud>");
+							   sb.append("</poi>");
+//				                           "VALUES ( '" + b.getName() + "', '" + b.getFeatureCode() +"', "+ b.getLatitude()+", "+b.getLongitude()+")");				  
+						   }
+						   fout.write(sb.toString());
+						   fout.close();
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					Log.e("yo","cometí un error ups");
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					Log.e("yo","no use condon");
+					e.printStackTrace();
+				}
+	        	Log.e("yo","toy redy");
 	        	return 0;
 	        }
 	        else{
@@ -158,11 +222,14 @@ public class Fragment1 extends SherlockFragment {
         		Toast.makeText(getActivity(), "La ubicación es - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
         		lanzarMapa(latitude, longitude);
         	}
-        	else{
+        	else if(result==1){
         		ubicacion.showSettingsAlert(getActivity());
         	}
+        	else{
+        		Toast.makeText(getActivity(), "Hubo un error al buscar la ubicación", Toast.LENGTH_LONG).show();
+        	}
+        		
         }
 	}
-	
 	
 }

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 	private final SparseArray<ListViewExpanableItems> grupos;
@@ -71,12 +70,12 @@ public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 //		}
 		
 		
-//		convertView.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Toast.makeText(context, children + " - Item: " + groupPosition + " - Subitem:" + childPosition, Toast.LENGTH_SHORT).show();
-//			}
-//		});
+		convertView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+//				Grupo gp = new Grupo(groupPosition, childPosition);
+			}
+		});
 		return convertView;
 	}
 
@@ -164,6 +163,7 @@ public class ListViewExpanableAdaptador extends BaseExpandableListAdapter {
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
 	}
+	
 	
 
 }
