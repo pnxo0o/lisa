@@ -16,7 +16,7 @@ public class NoticiasActivity extends SherlockActivity {
 		
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle("Noticias");
-		getSupportActionBar().setSubtitle("de la Universidad");;
+		getSupportActionBar().setSubtitle("de la Universidad");
 		
 	}
 	

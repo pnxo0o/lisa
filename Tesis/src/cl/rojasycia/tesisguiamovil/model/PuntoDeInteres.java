@@ -15,6 +15,9 @@ public class PuntoDeInteres {
 		this.longitudPOI = longitudPOI;
 	}
 
+	public PuntoDeInteres() {
+	}
+
 	public String getNombrePOI() {
 		return nombrePOI;
 	}

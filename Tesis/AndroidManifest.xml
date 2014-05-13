@@ -36,11 +36,21 @@
         
         <activity 
             android:name="cl.rojasycia.tesisguiamovil.ui.InfUniversidadActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Gmovilgreen.TranslucentActionBar">
         </activity>
         
         <activity 
-            android:name="cl.rojasycia.tesisguiamovil.ui.MapPOIActivity">
+            android:name="cl.rojasycia.tesisguiamovil.ui.MapPOIActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        
+        <activity 
+            android:name="cl.rojasycia.tesisguiamovil.ui.NoticiasActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
         
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />

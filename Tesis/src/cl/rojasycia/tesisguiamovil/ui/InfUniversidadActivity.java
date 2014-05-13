@@ -1,11 +1,14 @@
 package cl.rojasycia.tesisguiamovil.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.model.Universidad;
+import cl.rojasycia.tesisguiamovil.utils.NetworkUtil;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -68,6 +71,14 @@ public class InfUniversidadActivity extends SherlockActivity {
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+        case R.id.noticias_universidad:
+        	if (NetworkUtil.getConnectivityStatus(this)==NetworkUtil.TYPE_NOT_CONNECTED){
+            	Toast.makeText(getApplicationContext(), "No hay conexión a internet", Toast.LENGTH_SHORT).show();
+            }
+            else{   		
+            	lanzarNoticias(universidad_elegida);
+            	return true;
+            }  
         case android.R.id.home:
         	super.onBackPressed();
             return true;
@@ -75,5 +86,12 @@ public class InfUniversidadActivity extends SherlockActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+	
+	public void lanzarNoticias(int universidad){
+		Intent intent;
+		intent = new Intent(this, NoticiasActivity.class);
+		intent.putExtra("universidad_seleccionada", universidad);
+		startActivity(intent);
+	}
 
 }

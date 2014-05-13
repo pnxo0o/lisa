@@ -170,6 +170,7 @@ public class Fragment1 extends SherlockFragment   {
         	
 	        if(ubicacion.canGetLocation()){
 	        	if(NetworkUtil.getConnectivityStatus(getActivity())==NetworkUtil.TYPE_WIFI){
+	        		if(!ubicacion.isWifiEnabled()) return 3;
 	        		a2500.run();
 	        		latitude = ubicacion.getLatitude();
 		        	longitude = ubicacion.getLongitude();
@@ -191,6 +192,7 @@ public class Fragment1 extends SherlockFragment   {
 					if(searchResult.size()>0){
 						   Log.e("yo","ya baje las weas");
 						   Iterator<Toponym> iterador = searchResult.listIterator(); 
+						   sb.append("<pois>");
 						   while( iterador.hasNext() ) {
 							   Toponym b = (Toponym) iterador.next();
 							   sb.append("<poi>");
@@ -198,20 +200,17 @@ public class Fragment1 extends SherlockFragment   {
 							   sb.append("<tipo>" + b.getFeatureCode() + "</tipo>");
 							   sb.append("<latitud>" + b.getLatitude() + "</latitud>");
 							   sb.append("<longitud>" + b.getLongitude() + "</longitud>");
-							   sb.append("</poi>");
-//				                           "VALUES ( '" + b.getName() + "', '" + b.getFeatureCode() +"', "+ b.getLatitude()+", "+b.getLongitude()+")");				  
+							   sb.append("</poi>");			  
 						   }
+						   sb.append("</pois>");
 						   fout.write(sb.toString());
 						   fout.close();
 					}
 				} catch (IOException e) {
-					Log.e("yo","cometí un error ups");
 					e.printStackTrace();
 				} catch (Exception e) {
-					Log.e("yo","no use condon");
 					e.printStackTrace();
 				}
-	        	Log.e("yo","toy redy");
 	        	return 0;
 	        }
 	        else{
@@ -223,15 +222,17 @@ public class Fragment1 extends SherlockFragment   {
         protected void onPostExecute(Integer result) {
             // Aquí actualizamos la UI con el resultado
         	mProgressDialog.dismiss();
-        	if(result==0){
+        	if(result == 0){
         		Toast.makeText(getActivity(), "La ubicación es - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
         		lanzarMapa(latitude, longitude);
         	}
-        	else if(result==1){
-        		ubicacion.showSettingsAlert(getActivity());
+        	else if(result == 1){
+        		ubicacion.showSettingsAlert(getActivity(), "GPS no activado", "GPS no está activado. Desea activarlo?");
         	}
-        	else{
-        		Toast.makeText(getActivity(), "Hubo un error al buscar la ubicación", Toast.LENGTH_LONG).show();
+        	else if(result == 2){
+        		Toast.makeText(getActivity(), "Hubo un error desconocido al buscar la ubicación", Toast.LENGTH_LONG).show();
+        	}else{
+        		ubicacion.showSettingsAlert(getActivity(), "Localización por red no activada", "La localización por red no está activada. Desea activarla?");
         	}
         		
         }

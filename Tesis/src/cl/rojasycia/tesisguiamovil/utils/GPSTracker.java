@@ -143,16 +143,13 @@ public class GPSTracker extends Service implements LocationListener {
 	 * Function to show settings alert dialog
 	 * On pressing Settings button will launch Settings Options
 	 * */
-	public void showSettingsAlert(Context cont){
+	public void showSettingsAlert(Context cont, String titulo, String texto){
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(cont);
-   	 
-        // Titulo
-        alertDialog.setTitle("GPS no activado");
- 
-        // Mensaje
-        alertDialog.setMessage("GPS no está activado. Desea activarlo?");
- 
-        // Boton si
+
+        alertDialog.setTitle(titulo);
+
+        alertDialog.setMessage(texto);
+
         alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog,int which) {
             	Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -181,6 +178,16 @@ public class GPSTracker extends Service implements LocationListener {
 		isGPSEnabled = locationManager
 				.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		return isGPSEnabled;
+	}
+	
+	public boolean isWifiEnabled(){
+		locationManager = (LocationManager) context
+				.getSystemService(LOCATION_SERVICE);
+
+		// Obteniendo estado GPS
+		isNetworkEnabled = locationManager
+				.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+		return isNetworkEnabled;
 	}
 
 	@Override
