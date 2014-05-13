@@ -30,6 +30,7 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 	Fragment fragment3 = new Fragment3();
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,7 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 		
 		//fondo drawer
 		mDrawerList.setBackgroundResource(R.drawable.fondo_drawer);
+		
 	}
 
 	@Override

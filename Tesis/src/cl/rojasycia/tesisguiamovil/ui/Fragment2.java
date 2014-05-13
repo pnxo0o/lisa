@@ -9,6 +9,8 @@ import cl.rojasycia.tesisguiamovil.model.Universidad;
 import cl.rojasycia.tesisguiamovil.struct.*;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class Fragment2 extends SherlockFragment {
+public class Fragment2 extends SherlockFragment  {
 	
 	private ArrayList<UniversidadItem> arrayUniversidades;
 	private ListView lvlUniversidades;
@@ -63,6 +65,7 @@ public class Fragment2 extends SherlockFragment {
 		intent = new Intent(getActivity(), InfUniversidadActivity.class);
 		intent.putExtra("universidad_elegida", a);
 		startActivity(intent);
+		getActivity().getSupportFragmentManager().popBackStack();
 	}
 
 	private void rellenarArrayList() {
