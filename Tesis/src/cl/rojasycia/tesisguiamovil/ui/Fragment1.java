@@ -122,7 +122,7 @@ public class Fragment1 extends SherlockFragment   {
 
 	private class AsyncLatLong extends AsyncTask<String, Void, Integer>{
 
-		private Thread a5000, a2500;
+		private Thread aGPS, aWIFI;
 		private OutputStreamWriter fout;
 		private Grupo gp;
 		private StringBuilder sb;
@@ -142,20 +142,20 @@ public class Fragment1 extends SherlockFragment   {
 				Log.e("yo","cagamos escribiendo el xml culiao");
 			}
 			sb = new StringBuilder();
-			a5000 = new Thread(new Runnable() {
+			aGPS = new Thread(new Runnable() {
 			    public void run() {
 					try {
-						Thread.sleep(5100);
+						Thread.sleep(GPSTracker.TIEMPO_GPS+100);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					} 
 				}
 
 			 });
-			a2500 = new Thread(new Runnable() {
+			aWIFI = new Thread(new Runnable() {
 			    public void run() {
 					try {
-						Thread.sleep(2500);
+						Thread.sleep(GPSTracker.TIEMPO_WIFI+100);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					} 
@@ -168,55 +168,63 @@ public class Fragment1 extends SherlockFragment   {
         protected Integer doInBackground(String... params) {
             // Aquí hacemos las tareas 
         	
-	        if(ubicacion.canGetLocation()){
-	        	if(NetworkUtil.getConnectivityStatus(getActivity())==NetworkUtil.TYPE_WIFI){
-	        		if(!ubicacion.isWifiEnabled()) return 3;
-	        		a2500.run();
+	        if(NetworkUtil.getConnectivityStatus(getActivity()) == NetworkUtil.TYPE_WIFI){
+	        	if(!ubicacion.isWifiEnabled()){
+	        		return 3;
+	        	}
+	        	else if(ubicacion.canGetLocation()){
+	        		aWIFI.run();
 	        		latitude = ubicacion.getLatitude();
 		        	longitude = ubicacion.getLongitude();
 		        	if(latitude == 0.0 && longitude == 0.0) return 2;
 	        	}
-	        	else{
-	        		if(!ubicacion.isGPSEnabled()) return 1;
-	        		a5000.run();
-	        		latitude = ubicacion.getLatitude();
-		        	longitude = ubicacion.getLongitude();
-		        	ubicacion.stopUsingGPS();
-		        	if(latitude == 0.0 && longitude == 0.0) return 2;
+	        else if(NetworkUtil.getConnectivityStatus(getActivity()) == NetworkUtil.TYPE_MOBILE){
+	        	if(!ubicacion.isGPSEnabled()){
+	        		return 1;
 	        	}
-	        	 Log.e("yo","ya tengo el place");
+	        	else if(ubicacion.canGetLocation()) {
+	        		aGPS.run();
+		        	latitude = ubicacion.getLatitude();
+			        longitude = ubicacion.getLongitude();
+			        ubicacion.stopUsingGPS();
+			        if(latitude == 0.0 && longitude == 0.0) return 2;
+	        	}
+	        		
+	        }
+	        
+	        Log.e("yo","tenemos la ubicacion");
 	        	
-	        	try {
-	        		WebService.setUserName("pnxo0o");
-					List<Toponym> searchResult = WebService.findNearby(latitude, longitude, 250.0 ,FeatureClass.S ,gp.getGrupo(), "es", 12);
-					if(searchResult.size()>0){
-						   Log.e("yo","ya baje las weas");
-						   Iterator<Toponym> iterador = searchResult.listIterator(); 
-						   sb.append("<pois>");
-						   while( iterador.hasNext() ) {
-							   Toponym b = (Toponym) iterador.next();
-							   sb.append("<poi>");
-							   sb.append("<nombre>" + b.getName() + "</nombre>");
-							   sb.append("<tipo>" + b.getFeatureCode() + "</tipo>");
-							   sb.append("<latitud>" + b.getLatitude() + "</latitud>");
-							   sb.append("<longitud>" + b.getLongitude() + "</longitud>");
-							   sb.append("</poi>");			  
-						   }
-						   sb.append("</pois>");
-						   fout.write(sb.toString());
-						   fout.close();
+	        try {
+	        	WebService.setUserName("pnxo0o");
+				List<Toponym> searchResult = WebService.findNearby(latitude, longitude, 250.0 ,FeatureClass.S ,gp.getGrupo(), "es", 12);
+				if(searchResult.size()>0){
+					Log.e("yo","ya baje las weas");
+					Iterator<Toponym> iterador = searchResult.listIterator(); 
+					sb.append("<pois>");
+					while( iterador.hasNext() ) {
+						Toponym b = (Toponym) iterador.next();
+						sb.append("<poi>");
+						sb.append("<nombre>" + b.getName() + "</nombre>");
+						sb.append("<tipo>" + b.getFeatureCode() + "</tipo>");
+						sb.append("<latitud>" + b.getLatitude() + "</latitud>");
+						sb.append("<longitud>" + b.getLongitude() + "</longitud>");
+						sb.append("</poi>");			  
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
+					sb.append("</pois>");
+					fout.write(sb.toString());
+					fout.close();
 				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	        	return 0;
 	        }
-	        else{
-	        	return 1;
-	        }
+			return 2;
+	        
         }
+        
  
         @Override
         protected void onPostExecute(Integer result) {

@@ -37,7 +37,8 @@ public class GPSTracker extends Service implements LocationListener {
 	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 3; // 3 metros
 
 	// Minimo tiempo para actualizar
-	private static final long MIN_TIME_BW_UPDATES = 1000 * 50 * 1; // 5sg
+	public static final long TIEMPO_GPS = 1000 * 70 * 1; // 7sg
+	public static final long TIEMPO_WIFI = 1000 * 10 * 1; // 1sg
 
 	// Location Manager
 	protected LocationManager locationManager;
@@ -45,22 +46,26 @@ public class GPSTracker extends Service implements LocationListener {
 	public GPSTracker(Context context, int typeLocation) {
 		this.context = context;
 		this.typeLocation = typeLocation;
-		getLocation();
+		if(this.typeLocation == NetworkUtil.TYPE_WIFI){
+			getLocationWifi();
+		}
+		else{
+			getLocationGPS();
+		}
+		
 	}
 
-	public Location getLocation() {
-//		try {
+	public Location getLocationGPS() {
+		try {
 			
 			locationManager = (LocationManager) context
 					.getSystemService(LOCATION_SERVICE);
 
-
-			if(this.typeLocation==NetworkUtil.TYPE_WIFI){
+			if(isGPSEnabled()){
 				this.canGetLocation = true;
-//				if (isNetworkEnabled) {
 					locationManager.requestLocationUpdates(
 							LocationManager.NETWORK_PROVIDER,
-							MIN_TIME_BW_UPDATES,
+							TIEMPO_WIFI,
 							MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 					if (locationManager != null) {
 						location = locationManager
@@ -70,35 +75,39 @@ public class GPSTracker extends Service implements LocationListener {
 							longitude = location.getLongitude();
 						}
 					}
-//				}
 			}
-
-			if(this.typeLocation==NetworkUtil.TYPE_MOBILE){
-//				if (isGPSEnabled) {
-					this.canGetLocation = true;
-//					if (location == null) {
-						locationManager.requestLocationUpdates(
-								LocationManager.GPS_PROVIDER,
-								MIN_TIME_BW_UPDATES,
-								MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-						if (locationManager != null) {
-							location = locationManager
-									.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-							if (location != null) {
-								latitude = location.getLatitude();
-								longitude = location.getLongitude();
-							}
-//						}
-					}
-//				}
-			}
-//		 } 
-//		catch (Exception e) {
-//	            e.printStackTrace();
-//	     }
+		 } 
+		catch (Exception e) {
+	            e.printStackTrace();
+	     }
 		return location;
 	}
 	
+	
+	public Location getLocationWifi() {
+		try {
+			
+			locationManager = (LocationManager) context
+					.getSystemService(LOCATION_SERVICE);
+			this.canGetLocation = true;
+			locationManager.requestLocationUpdates(
+						LocationManager.NETWORK_PROVIDER,
+						TIEMPO_WIFI,
+						MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+				if (locationManager != null) {
+					location = locationManager
+							.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+					if (location != null) {
+						latitude = location.getLatitude();
+						longitude = location.getLongitude();
+					}
+				}
+		 } 
+		catch (Exception e) {
+	            e.printStackTrace();
+	     }
+		return location;
+	}
 	
 	
 	/**
@@ -192,6 +201,7 @@ public class GPSTracker extends Service implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {
+		Log.e("yo",location.getLatitude()+" - "+location.getLongitude());
 	}
 
 	@Override
