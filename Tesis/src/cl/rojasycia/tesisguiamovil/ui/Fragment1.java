@@ -35,6 +35,11 @@ import android.widget.Toast;
 
 public class Fragment1 extends SherlockFragment   {
 	
+	private final int ERROR_GPS = 1;
+	private final int FALLO_TIME_OUT = 2;
+	private final int ERROR_WIFI = 3;
+	private final int OK = 0;
+	
 	private SparseArray<ListViewExpanableItems> grupos = new SparseArray<ListViewExpanableItems>();
 	private Button btnBuscarAqui;
 	
@@ -73,7 +78,7 @@ public class Fragment1 extends SherlockFragment   {
 	 */
 	public void crearDatos() {
 		ListViewExpanableItems grupo0 = new ListViewExpanableItems("Universidades");
-		grupo0.children.add("Universidades");
+		grupo0.children.add("Todas las Universidades");
 		grupo0.children.add("Universidad de Playa Ancha de Ciencias de la Educación");
 		grupo0.children.add("Universidad de Valparaíso");
 		grupo0.children.add("Universidad Técnica Federico Santa María");
@@ -81,19 +86,32 @@ public class Fragment1 extends SherlockFragment   {
 		grupos.append(0, grupo0);
 
 		ListViewExpanableItems grupo1 = new ListViewExpanableItems("Alimentación");
-		grupo1.children.add("Supermercado");
+		grupo1.children.add("Todos los lugares de Alimentación");
+		grupo1.children.add("Supermercados");
+		grupo1.children.add("Cafeterías");
+		grupo1.children.add("Comida Rápida");
 		grupos.append(1, grupo1);
 
 		ListViewExpanableItems grupo2 = new ListViewExpanableItems("Alojamiento");
-		grupo2.children.add("Hostal");
+		grupo2.children.add("Todos los Alojamientos");
+		grupo2.children.add("Residenciales");
+		grupo2.children.add("Casas para alojar");
+		grupo2.children.add("Habitaciones");
+		grupo2.children.add("Hoteles");
 		grupos.append(2, grupo2);
 		
 		ListViewExpanableItems grupo3 = new ListViewExpanableItems("Entretención");
-		grupo3.children.add("Bar");
+		grupo3.children.add("Todos los lugares de Entretención");
+		grupo3.children.add("Espacios Publicos");
+		grupo3.children.add("Bares");
+		grupo3.children.add("Discos");
 		grupos.append(3, grupo3);
 		
 		ListViewExpanableItems grupo4 = new ListViewExpanableItems("Servicios");
+		grupo4.children.add("Todos los Servicios");
 		grupo4.children.add("Servicio Medico");
+		grupo4.children.add("Carabineros");
+		grupo4.children.add("Bomberos");
 		grupos.append(4, grupo4);
 	}
 
@@ -102,7 +120,7 @@ public class Fragment1 extends SherlockFragment   {
 	 * y busca puntos de interes
 	 */
 	public void buscarAqui() {
-		if(NetworkUtil.getConnectivityStatus(getActivity())==0){
+		if(NetworkUtil.getConnectivityStatus(getActivity()) == 0){
 			Toast.makeText(getActivity(), "Revise su conexión a internet", Toast.LENGTH_SHORT).show();
 		}
 		else{
@@ -170,35 +188,36 @@ public class Fragment1 extends SherlockFragment   {
         	
 	        if(NetworkUtil.getConnectivityStatus(getActivity()) == NetworkUtil.TYPE_WIFI){
 	        	if(!ubicacion.isWifiEnabled()){
-	        		return 3;
+	        		return ERROR_WIFI;
 	        	}
 	        	else if(ubicacion.canGetLocation()){
 	        		aWIFI.run();
 	        		latitude = ubicacion.getLatitude();
 		        	longitude = ubicacion.getLongitude();
-		        	if(latitude == 0.0 && longitude == 0.0) return 2;
+		        	if(latitude == 0.0 && longitude == 0.0) return FALLO_TIME_OUT;
 	        	}
-	        else if(NetworkUtil.getConnectivityStatus(getActivity()) == NetworkUtil.TYPE_MOBILE){
+	        }
+	        else {
 	        	if(!ubicacion.isGPSEnabled()){
-	        		return 1;
+	        		return ERROR_GPS;
 	        	}
 	        	else if(ubicacion.canGetLocation()) {
 	        		aGPS.run();
 		        	latitude = ubicacion.getLatitude();
 			        longitude = ubicacion.getLongitude();
 			        ubicacion.stopUsingGPS();
-			        if(latitude == 0.0 && longitude == 0.0) return 2;
+			        if(latitude == 0.0 && longitude == 0.0) return FALLO_TIME_OUT;
 	        	}
 	        		
 	        }
 	        
-	        Log.e("yo","tenemos la ubicacion");
+	        Log.e("yo","ubicacion lista");
 	        	
 	        try {
 	        	WebService.setUserName("pnxo0o");
 				List<Toponym> searchResult = WebService.findNearby(latitude, longitude, 250.0 ,FeatureClass.S ,gp.getGrupo(), "es", 12);
-				if(searchResult.size()>0){
-					Log.e("yo","ya baje las weas");
+				if(searchResult.size() > 0){
+					Log.e("yo","descarga poi lista");
 					Iterator<Toponym> iterador = searchResult.listIterator(); 
 					sb.append("<pois>");
 					while( iterador.hasNext() ) {
@@ -219,31 +238,31 @@ public class Fragment1 extends SherlockFragment   {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-	        	return 0;
-	        }
-			return 2;
+	        return OK;
 	        
-        }
+    }
         
  
         @Override
         protected void onPostExecute(Integer result) {
-            // Aquí actualizamos la UI con el resultado
         	mProgressDialog.dismiss();
-        	if(result == 0){
+        	if(result == OK){
         		Toast.makeText(getActivity(), "La ubicación es - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
         		lanzarMapa(latitude, longitude);
         	}
-        	else if(result == 1){
+        	else if(result == ERROR_GPS){
         		ubicacion.showSettingsAlert(getActivity(), "GPS no activado", "GPS no está activado. Desea activarlo?");
         	}
-        	else if(result == 2){
-        		Toast.makeText(getActivity(), "Hubo un error desconocido al buscar la ubicación", Toast.LENGTH_LONG).show();
-        	}else{
+        	else if(result == FALLO_TIME_OUT){
+        		Toast.makeText(getActivity(), "Ups, tuvimos un error detectando su ubicación, intente nuevamente", Toast.LENGTH_LONG).show();
+        	}
+        	else if(result == ERROR_WIFI){
         		ubicacion.showSettingsAlert(getActivity(), "Localización por red no activada", "La localización por red no está activada. Desea activarla?");
         	}
         		
         }
+        
+        
 	}
 
 }

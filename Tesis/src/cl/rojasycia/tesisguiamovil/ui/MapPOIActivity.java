@@ -5,9 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import android.os.Bundle;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.view.View;
 import cl.rojasycia.tesisguiamovil.R;
-import cl.rojasycia.tesisguiamovil.model.ParserPuntoDeInteres;
 import cl.rojasycia.tesisguiamovil.model.PuntoDeInteres;
+import cl.rojasycia.tesisguiamovil.struct.PuntoDeInteresAdapter;
+import cl.rojasycia.tesisguiamovil.utils.ParserPuntoDeInteres;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -25,6 +30,8 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 	private LatLng latLongUsuario;
 	ParserPuntoDeInteres listaGuardadaPtos;
 	List<PuntoDeInteres> puntos;
+	private ListView lSelected;
+	private PuntoDeInteresAdapter adaptador;
 	
 
 	@Override
@@ -32,6 +39,8 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_mappoi);
+
+		lSelected = (ListView)findViewById(R.id.listViewPOI);
 		
 		Bundle datos = this.getIntent().getExtras();
 		latitud = datos.getDouble("latitud");
@@ -47,6 +56,9 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 		listaGuardadaPtos = new ParserPuntoDeInteres(getApplicationContext());
 		puntos = listaGuardadaPtos.getPOI();
 		
+		adaptador = new PuntoDeInteresAdapter (getApplicationContext(), R.layout.item_poi, listaGuardadaPtos.convertirListaAArreglo(puntos));
+		lSelected.setAdapter(adaptador);
+		
 		if(puntos.size()>0){
 			Iterator<PuntoDeInteres> i = puntos.listIterator();
 			while( i.hasNext() ) {
@@ -56,6 +68,13 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 					.position(POILatLng));
 			   }
 		}
+		
+		lSelected.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {		
+				mapa.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(adaptador.getItem(position).getLatitudPOI(), adaptador.getItem(position).getLongitudPOI())));
+			}
+		});
 	}
 
 	@Override

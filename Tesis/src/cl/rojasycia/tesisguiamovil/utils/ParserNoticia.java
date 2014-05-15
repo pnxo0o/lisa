@@ -1,7 +1,8 @@
-package cl.rojasycia.tesisguiamovil.model;
+package cl.rojasycia.tesisguiamovil.utils;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -12,26 +13,27 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import cl.rojasycia.tesisguiamovil.model.Noticia;
 import android.content.Context;
 
-public class ParserPuntoDeInteres {
-
-    private Context context;
-
-	public ParserPuntoDeInteres(Context context)
+public class ParserNoticia {
+	
+	private Context context;
+	
+	public ParserNoticia(Context context)
     {
         this.context = context;
     }
     
-    public List<PuntoDeInteres> getPOI(){
+    public List<Noticia> getNoticiasGuardadas(){
     	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        List<PuntoDeInteres> listaPuntos = new ArrayList<PuntoDeInteres>();
+        List<Noticia> listaNoticias = new ArrayList<Noticia>();
  
         try
         {
             //Creamos un nuevo parser DOM
             DocumentBuilder builder = factory.newDocumentBuilder();
-            FileInputStream fil = context.openFileInput("poi_descargados.xml");
+            FileInputStream fil = context.openFileInput("noticias_descargadas.xml");
  
             //Realizamos lalectura completa del XML
             Document dom = builder.parse(fil);
@@ -40,12 +42,12 @@ public class ParserPuntoDeInteres {
             Element root = dom.getDocumentElement();
  
             //Localizamos todos los elementos <item>
-            NodeList items = root.getElementsByTagName("poi");
+            NodeList items = root.getElementsByTagName("noticia");
  
             //Recorremos 
             for (int i=0; i<items.getLength(); i++)
             {
-                PuntoDeInteres poi = new PuntoDeInteres();
+                Noticia noticia = new Noticia();
  
                 //Obtenemos poi
                 Node item = items.item(i);
@@ -59,29 +61,24 @@ public class ParserPuntoDeInteres {
                     Node dato = datosPoi.item(j);
                     String etiqueta = dato.getNodeName();
  
-                    if (etiqueta.equals("nombre"))
+                    if (etiqueta.equals("titular"))
                     {
                         String texto = obtenerTexto(dato);
-                        poi.setNombrePOI(texto);;
+                        noticia.setTitularNoticia(texto);
                     }
-                    else if (etiqueta.equals("tipo"))
+                    else if (etiqueta.equals("fecha"))
                     {
                     	String texto = obtenerTexto(dato);
-                    	poi.setTipoPOI(texto);
+                    	noticia.setFechaNoticia(texto);
                     }
-                    else if (etiqueta.equals("latitud"))
+                    else if (etiqueta.equals("link"))
                     {
                     	String texto = obtenerTexto(dato);
-                    	poi.setLatitudPOI(Double.parseDouble(texto));;
-                    }
-                    else if (etiqueta.equals("longitud"))
-                    {
-                    	String texto = obtenerTexto(dato);
-                    	poi.setLongitudPOI(Double.parseDouble(texto));;
+                    	noticia.setLinkNoticia(texto);
                     }
                 }
  
-                listaPuntos.add(poi);
+                listaNoticias.add(noticia);
             }
         }
         catch (Exception ex)
@@ -89,7 +86,7 @@ public class ParserPuntoDeInteres {
             throw new RuntimeException(ex);
         }
  
-        return listaPuntos;
+        return listaNoticias;
     }
     
     private String obtenerTexto(Node dato)
@@ -104,4 +101,17 @@ public class ParserPuntoDeInteres {
  
         return texto.toString();
     }
+    
+    public ArrayList<Noticia> convertirListaAArreglo(List<Noticia> ls) {	
+    	ArrayList<Noticia> x = new ArrayList<Noticia>();
+    	if(ls.size() > 0){
+			Iterator<Noticia> iterador = ls.listIterator();
+			while( iterador.hasNext() ) {
+				Noticia b = (Noticia) iterador.next();
+				x.add(b);
+			}
+		}
+    	return x;
+    }
+
 }

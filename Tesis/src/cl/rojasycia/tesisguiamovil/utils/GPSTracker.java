@@ -37,8 +37,8 @@ public class GPSTracker extends Service implements LocationListener {
 	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 3; // 3 metros
 
 	// Minimo tiempo para actualizar
-	public static final long TIEMPO_GPS = 1000 * 70 * 1; // 7sg
-	public static final long TIEMPO_WIFI = 1000 * 10 * 1; // 1sg
+	public static final long TIEMPO_GPS = 1000 * 40 * 1; // 38sg
+	public static final long TIEMPO_WIFI = 1000 * 20 * 1; // 20sg
 
 	// Location Manager
 	protected LocationManager locationManager;
@@ -64,12 +64,12 @@ public class GPSTracker extends Service implements LocationListener {
 			if(isGPSEnabled()){
 				this.canGetLocation = true;
 					locationManager.requestLocationUpdates(
-							LocationManager.NETWORK_PROVIDER,
-							TIEMPO_WIFI,
+							LocationManager.GPS_PROVIDER,
+							TIEMPO_GPS,
 							MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 					if (locationManager != null) {
 						location = locationManager
-								.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+								.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 						if (location != null) {
 							latitude = location.getLatitude();
 							longitude = location.getLongitude();

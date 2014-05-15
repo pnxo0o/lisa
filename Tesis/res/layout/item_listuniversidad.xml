@@ -24,6 +24,6 @@
         android:layout_toRightOf="@+id/logoUniv"
         android:layout_marginBottom="30dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:text="sxxs" />
+        android:text="@string/hello_world" />
 
 </RelativeLayout>

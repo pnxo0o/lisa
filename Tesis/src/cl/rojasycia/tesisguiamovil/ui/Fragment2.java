@@ -9,8 +9,6 @@ import cl.rojasycia.tesisguiamovil.model.Universidad;
 import cl.rojasycia.tesisguiamovil.struct.*;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +18,9 @@ import android.widget.ListView;
 
 public class Fragment2 extends SherlockFragment  {
 	
-	private ArrayList<UniversidadItem> arrayUniversidades;
+	private ArrayList<LUniversidadItem> arrayUniversidades;
 	private ListView lvlUniversidades;
-	private UniversidadAdapter adapter;
+	private LUniversidadAdapter adapter;
 	
 	
 	@Override
@@ -31,9 +29,9 @@ public class Fragment2 extends SherlockFragment  {
 		View rootView = inflater.inflate(R.layout.fragment2, container, false);
 		lvlUniversidades = (ListView) rootView.findViewById(R.id.lvUniv);
 		
-		arrayUniversidades = new ArrayList<UniversidadItem>();
+		arrayUniversidades = new ArrayList<LUniversidadItem>();
 		rellenarArrayList();
-		adapter = new UniversidadAdapter(getActivity(), arrayUniversidades);
+		adapter = new LUniversidadAdapter(getActivity(), arrayUniversidades);
 		lvlUniversidades.setAdapter(adapter);
 		
 		lvlUniversidades.setOnItemClickListener(new OnItemClickListener() {
@@ -69,10 +67,10 @@ public class Fragment2 extends SherlockFragment  {
 	}
 
 	private void rellenarArrayList() {
-		arrayUniversidades.add(new UniversidadItem("Universidad de Playa Ancha de Ciencias de la Educación", R.drawable.u_upla));
-		arrayUniversidades.add(new UniversidadItem("Universidad de Valparaíso", R.drawable.u_uv));
-		arrayUniversidades.add(new UniversidadItem("Universidad Técnica Federico Santa María", R.drawable.u_usm));
-		arrayUniversidades.add(new UniversidadItem("Pontificia Universidad Católica de Valparaiso", R.drawable.u_pucv));
+		arrayUniversidades.add(new LUniversidadItem("Universidad de Playa Ancha de Ciencias de la Educación", R.drawable.u_upla));
+		arrayUniversidades.add(new LUniversidadItem("Universidad de Valparaíso", R.drawable.u_uv));
+		arrayUniversidades.add(new LUniversidadItem("Universidad Técnica Federico Santa María", R.drawable.u_usm));
+		arrayUniversidades.add(new LUniversidadItem("Pontificia Universidad Católica de Valparaiso", R.drawable.u_pucv));
 	}
 
 

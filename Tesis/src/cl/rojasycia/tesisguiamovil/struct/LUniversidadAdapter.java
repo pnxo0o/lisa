@@ -12,9 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class UniversidadAdapter extends ArrayAdapter<UniversidadItem> {
+public class LUniversidadAdapter extends ArrayAdapter<LUniversidadItem> {
 	private Context context;
-	private ArrayList<UniversidadItem> datos;
+	private ArrayList<LUniversidadItem> datos;
 
 	/**
 	 * Constructor del Adapter.
@@ -24,7 +24,7 @@ public class UniversidadAdapter extends ArrayAdapter<UniversidadItem> {
 	 * @param datos
 	 *            Datos que se desean visualizar en el ListView.
 	 */
-	public UniversidadAdapter(Context context, ArrayList<UniversidadItem> datos) {
+	public LUniversidadAdapter(Context context, ArrayList<LUniversidadItem> datos) {
 		super(context, R.layout.item_listuniversidad, datos);
 		// Guardamos los parámetros en variables de clase.
 		this.context = context;

@@ -7,15 +7,19 @@
 
     <fragment
         android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.06"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+        class="com.google.android.gms.maps.SupportMapFragment" 
+		android:layout_width="match_parent"
+	    android:layout_height="0dp"
+ 		android:layout_weight="1"
+	    android:layout_gravity="top" />
 
-    <Button
-        android:id="@+id/button1"
+    <ListView
+        android:id="@+id/listViewPOI"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_height="0dp"
+        android:layout_gravity="bottom" >
+
+    </ListView>
 
 </LinearLayout>

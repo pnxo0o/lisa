@@ -1,12 +1,12 @@
 package cl.rojasycia.tesisguiamovil.struct;
 
 
-public class UniversidadItem {
+public class LUniversidadItem {
 	
 	private String nombre;
 	private int drawableImageID;
 
-	public UniversidadItem(String nombre, int drawableImageID) {
+	public LUniversidadItem(String nombre, int drawableImageID) {
 		this.nombre = nombre;
 		this.drawableImageID = drawableImageID;
 	}
