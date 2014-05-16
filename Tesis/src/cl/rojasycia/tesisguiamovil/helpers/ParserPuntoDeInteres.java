@@ -144,5 +144,35 @@ public class ParserPuntoDeInteres {
 			}
 		}
     	return x;
+    
     }
+
+    public ArrayList<PuntoDeInteres> getPOIDesdeBD(Context context){
+    	ArrayList<PuntoDeInteres> puntosSQL = new ArrayList<PuntoDeInteres>();
+		final POISQLiteHelper usdbh = new POISQLiteHelper(context, "DBPoi", null, 1);
+        final SQLiteDatabase db = usdbh.getWritableDatabase();
+    	Cursor c = db.rawQuery("SELECT nombrePOI, tipoPOI, latitudPOI, longitudPOI FROM PuntoDeInteres ", null);
+
+		if (c.moveToFirst()) {
+		     do {
+		    	 
+		    	 PuntoDeInteres p = new PuntoDeInteres(c.getString(0), c.getString(1), c.getDouble(2), c.getDouble(3));
+		    	 if(p.getTipoPOI().equals("UNIV")){
+						p.setImagenPOI(R.drawable.icon_universidad);
+					}
+					else{
+						p.setImagenPOI(R.drawable.icon_alojamiento);
+					}
+		    	 puntosSQL.add(p);
+		     
+		     } while(c.moveToNext());
+		     return puntosSQL;
+		}
+		else{
+			return null;
+		}
+		
+	}
+    
+    
 }

@@ -3,16 +3,12 @@ package cl.rojasycia.tesisguiamovil.struct;
 import java.util.ArrayList;
 
 import cl.rojasycia.tesisguiamovil.R;
-import cl.rojasycia.tesisguiamovil.model.Noticia;
 import cl.rojasycia.tesisguiamovil.model.PuntoDeInteres;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
