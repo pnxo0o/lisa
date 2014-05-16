@@ -1,6 +1,7 @@
 package cl.rojasycia.tesisguiamovil.ui;
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,9 +11,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.view.View;
 import cl.rojasycia.tesisguiamovil.R;
+import cl.rojasycia.tesisguiamovil.helpers.ParserPuntoDeInteres;
 import cl.rojasycia.tesisguiamovil.model.PuntoDeInteres;
 import cl.rojasycia.tesisguiamovil.struct.PuntoDeInteresAdapter;
-import cl.rojasycia.tesisguiamovil.utils.ParserPuntoDeInteres;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -32,6 +33,7 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 	List<PuntoDeInteres> puntos;
 	private ListView lSelected;
 	private PuntoDeInteresAdapter adaptador;
+	private ArrayList<PuntoDeInteres> puntosList;
 	
 
 	@Override
@@ -55,8 +57,9 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 		
 		listaGuardadaPtos = new ParserPuntoDeInteres(getApplicationContext());
 		puntos = listaGuardadaPtos.getPOI();
+		puntosList = listaGuardadaPtos.convertirListaAArreglo(puntos, getApplicationContext());
 		
-		adaptador = new PuntoDeInteresAdapter (getApplicationContext(), R.layout.item_poi, listaGuardadaPtos.convertirListaAArreglo(puntos));
+		adaptador = new PuntoDeInteresAdapter (getApplicationContext(), R.layout.item_poi, puntosList );
 		lSelected.setAdapter(adaptador);
 		
 		if(puntos.size()>0){
@@ -72,7 +75,7 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 		lSelected.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {		
-				mapa.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(adaptador.getItem(position).getLatitudPOI(), adaptador.getItem(position).getLongitudPOI())));
+				mapa.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(adaptador.getItem(position).getLatitudPOI(), adaptador.getItem(position).getLongitudPOI())), 200, null);
 			}
 		});
 	}
@@ -88,5 +91,6 @@ public class MapPOIActivity extends SherlockFragmentActivity {
         }
     }
 	
+
 	
 }

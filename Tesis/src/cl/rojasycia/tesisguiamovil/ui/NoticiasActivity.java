@@ -9,11 +9,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.view.View;
-
 import cl.rojasycia.tesisguiamovil.R;
+import cl.rojasycia.tesisguiamovil.helpers.ParserNoticia;
 import cl.rojasycia.tesisguiamovil.model.Noticia;
 import cl.rojasycia.tesisguiamovil.struct.NoticiasAdapter;
-import cl.rojasycia.tesisguiamovil.utils.ParserNoticia;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;

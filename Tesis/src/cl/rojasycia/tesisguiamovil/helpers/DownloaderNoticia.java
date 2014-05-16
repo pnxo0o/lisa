@@ -1,4 +1,4 @@
-package cl.rojasycia.tesisguiamovil.utils;
+package cl.rojasycia.tesisguiamovil.helpers;
 
 import java.net.MalformedURLException;
 import java.net.URL;

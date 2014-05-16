@@ -5,12 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
  
-public class SQLiteHelper extends SQLiteOpenHelper {
+public class POISQLiteHelper extends SQLiteOpenHelper {
  
     //Sentencia SQL para crear la tabla 
     String sqlCreate = "CREATE TABLE PuntoDeInteres (nombrePOI TEXT, tipoPOI TEXT, latitudPOI DOUBLE PRECISION, longitudPOI DOUBLE PRECISION)";
  
-    public SQLiteHelper(Context contexto, String nombre,
+    public POISQLiteHelper(Context contexto, String nombre,
                                CursorFactory factory, int version) {
         super(contexto, nombre, factory, version);
     }

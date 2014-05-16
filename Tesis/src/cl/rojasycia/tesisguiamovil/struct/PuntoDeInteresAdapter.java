@@ -3,12 +3,17 @@ package cl.rojasycia.tesisguiamovil.struct;
 import java.util.ArrayList;
 
 import cl.rojasycia.tesisguiamovil.R;
+import cl.rojasycia.tesisguiamovil.model.Noticia;
 import cl.rojasycia.tesisguiamovil.model.PuntoDeInteres;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PuntoDeInteresAdapter extends ArrayAdapter<PuntoDeInteres>{
@@ -24,24 +29,29 @@ public class PuntoDeInteresAdapter extends ArrayAdapter<PuntoDeInteres>{
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.item_poi, null);
 		}
 		PuntoDeInteres poi = puntoDeInteres.get(position);
-		if (poi != null) {
+		if (poi  != null) {
 			TextView tv1 = (TextView) convertView.findViewById(R.id.txtPOI);
-			TextView tv2 = (TextView) convertView.findViewById(R.id.txtDes);
+			ImageView mv2 = (ImageView) convertView.findViewById(R.id.imgPOI);
 
 			if (tv1 != null) {
 				tv1.setText(poi.getNombrePOI());
 			}
-			if (tv2 != null) {
-				tv2.setText(poi.getTipoPOI());
+			if (mv2 != null) {
+				mv2.setImageResource(poi.getImagenPOI());
 			}
 
 		}
 		return convertView;
 	}
+
+
+
+
 }

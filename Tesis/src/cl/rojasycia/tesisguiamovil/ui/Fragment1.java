@@ -3,6 +3,8 @@ package cl.rojasycia.tesisguiamovil.ui;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,8 +16,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.model.Grupo;
-import cl.rojasycia.tesisguiamovil.struct.ListViewExpanableAdaptador;
-import cl.rojasycia.tesisguiamovil.struct.ListViewExpanableItems;
+import cl.rojasycia.tesisguiamovil.struct.ExpandableListAdapter;
 import cl.rojasycia.tesisguiamovil.utils.GPSTracker;
 import cl.rojasycia.tesisguiamovil.utils.NetworkUtil;
 import android.app.ProgressDialog;
@@ -24,27 +25,32 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
 public class Fragment1 extends SherlockFragment   {
 	
-	private final int ERROR_GPS = 1;
-	private final int FALLO_TIME_OUT = 2;
-	private final int ERROR_WIFI = 3;
-	private final int OK = 0;
+	public static final int ERROR_GPS = 1;
+	public static final int FALLO_TIME_OUT = 2;
+	public static final int ERROR_WIFI = 3;
+	public static final int OK = 0;
 	
-	private SparseArray<ListViewExpanableItems> grupos = new SparseArray<ListViewExpanableItems>();
+
+	private List<String> listDataHeader;
+	private HashMap<String, List<String>> listDataChild;
 	private Button btnBuscarAqui;
+	private ExpandableListView listaExpandible;
 	
-	ProgressDialog mProgressDialog;
+	private ProgressDialog mProgressDialog;
 	private AsyncLatLong latLong;
+	private ExpandableListAdapter listAdapter;
+	private Grupo gp;
 	
 	
 	@Override
@@ -55,11 +61,20 @@ public class Fragment1 extends SherlockFragment   {
 		mProgressDialog = new ProgressDialog(getActivity());
 		mProgressDialog.setMessage("Buscando...");
 		mProgressDialog.setCancelable(false);
-		
-		crearDatos();
-		ExpandableListView listaExpandible = (ExpandableListView) rootView.findViewById(R.id.listViewexp);
-		ListViewExpanableAdaptador adapter = new ListViewExpanableAdaptador(getActivity(), grupos);
-		listaExpandible.setAdapter(adapter);
+		listaExpandible = (ExpandableListView) rootView.findViewById(R.id.listViewexp);
+		prepararDatos();
+
+		listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+		listaExpandible.setAdapter(listAdapter);
+
+		listaExpandible.setOnChildClickListener(new OnChildClickListener() {
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+				buscarGrupo(groupPosition, childPosition);
+				return false;
+			}
+		});
 		
 		btnBuscarAqui = (Button) rootView.findViewById(R.id.btnBuscarAqui);
 		btnBuscarAqui.setOnClickListener(new OnClickListener(){
@@ -71,48 +86,57 @@ public class Fragment1 extends SherlockFragment   {
 			}); 
 		
 		return rootView;
+		
 	}
 	
-	/**
-	 * Método que crea los datos de la lista expandible
-	 */
-	public void crearDatos() {
-		ListViewExpanableItems grupo0 = new ListViewExpanableItems("Universidades");
-		grupo0.children.add("Todas las Universidades");
-		grupo0.children.add("Universidad de Playa Ancha de Ciencias de la Educación");
-		grupo0.children.add("Universidad de Valparaíso");
-		grupo0.children.add("Universidad Técnica Federico Santa María");
-		grupo0.children.add("Pontificia Universidad Católica de Valparaíso");
-		grupos.append(0, grupo0);
+	private void prepararDatos() {
+		listDataHeader = new ArrayList<String>();
+		listDataChild = new HashMap<String, List<String>>();
 
-		ListViewExpanableItems grupo1 = new ListViewExpanableItems("Alimentación");
-		grupo1.children.add("Todos los lugares de Alimentación");
-		grupo1.children.add("Supermercados");
-		grupo1.children.add("Cafeterías");
-		grupo1.children.add("Comida Rápida");
-		grupos.append(1, grupo1);
+		// Adding child data
+		listDataHeader.add("Universidades");
+		listDataHeader.add("Alimentación");
+		listDataHeader.add("Alojamiento");
+		listDataHeader.add("Entretención");
+		listDataHeader.add("Servicios");
 
-		ListViewExpanableItems grupo2 = new ListViewExpanableItems("Alojamiento");
-		grupo2.children.add("Todos los Alojamientos");
-		grupo2.children.add("Residenciales");
-		grupo2.children.add("Casas para alojar");
-		grupo2.children.add("Habitaciones");
-		grupo2.children.add("Hoteles");
-		grupos.append(2, grupo2);
+		// Adding child data
+		List<String> a = new ArrayList<String>();
+		a.add("Todas las Universidades");
+		a.add("Universidad de Playa Ancha de Ciencias de la Educación");
+		a.add("Universidad de Valparaíso");
+		a.add("Universidad Técnica Federico Santa María");
+		a.add("Pontificia Universidad Católica de Valparaíso");
+
+		List<String> b = new ArrayList<String>();
+		b.add("Todos los lugares de Alimentación");
+		b.add("Supermercados");
+		b.add("Cafeterías");
+		b.add("Comida Rápida");
+
+		List<String> c = new ArrayList<String>();
+		c.add("Todos los Alojamientos");
+		c.add("Residenciales");
+		c.add("Hostales");
+		c.add("Hoteles");
 		
-		ListViewExpanableItems grupo3 = new ListViewExpanableItems("Entretención");
-		grupo3.children.add("Todos los lugares de Entretención");
-		grupo3.children.add("Espacios Publicos");
-		grupo3.children.add("Bares");
-		grupo3.children.add("Discos");
-		grupos.append(3, grupo3);
+		List<String> d = new ArrayList<String>();
+		d.add("Todos los lugares de Entretención");
+		d.add("Espacios Publicos");
+		d.add("Bares");
+		d.add("Discos");
 		
-		ListViewExpanableItems grupo4 = new ListViewExpanableItems("Servicios");
-		grupo4.children.add("Todos los Servicios");
-		grupo4.children.add("Servicio Medico");
-		grupo4.children.add("Carabineros");
-		grupo4.children.add("Bomberos");
-		grupos.append(4, grupo4);
+		List<String> e = new ArrayList<String>();
+		e.add("Todos los Servicios");
+		e.add("Servicio Medico");
+		e.add("Carabineros");
+		e.add("Bomberos");
+
+		listDataChild.put(listDataHeader.get(0), a); // Header, Child data
+		listDataChild.put(listDataHeader.get(1), b);
+		listDataChild.put(listDataHeader.get(2), c);
+		listDataChild.put(listDataHeader.get(3), d);
+		listDataChild.put(listDataHeader.get(4), e);
 	}
 
 	/**
@@ -124,11 +148,22 @@ public class Fragment1 extends SherlockFragment   {
 			Toast.makeText(getActivity(), "Revise su conexión a internet", Toast.LENGTH_SHORT).show();
 		}
 		else{
+			gp = new Grupo(5, 0);
 			latLong  = new AsyncLatLong();
 			latLong.execute();
 		}
-        
     }
+	
+	public void buscarGrupo(int grupo, int subGrupo){
+		if(NetworkUtil.getConnectivityStatus(getActivity()) == 0){
+			Toast.makeText(getActivity(), "Revise su conexión a internet", Toast.LENGTH_SHORT).show();
+		}
+		else{
+			gp = new Grupo(grupo, subGrupo);
+			latLong  = new AsyncLatLong();
+			latLong.execute();
+		}
+	}
 
 	public void lanzarMapa(double latitud, double longitud){
 		Intent intent;
@@ -142,7 +177,6 @@ public class Fragment1 extends SherlockFragment   {
 
 		private Thread aGPS, aWIFI;
 		private OutputStreamWriter fout;
-		private Grupo gp;
 		private StringBuilder sb;
 		private double latitude;
 		private double longitude;
@@ -152,7 +186,6 @@ public class Fragment1 extends SherlockFragment   {
         protected void onPreExecute() {
 			mProgressDialog.show();
 			ubicacion = new GPSTracker(getActivity(), NetworkUtil.getConnectivityStatus(getActivity()));
-			gp = new Grupo(0, 0);
 			try {
 				fout = new OutputStreamWriter(getActivity().openFileOutput("poi_descargados.xml", Context.MODE_PRIVATE));
 			} catch (FileNotFoundException e1) {
@@ -239,7 +272,6 @@ public class Fragment1 extends SherlockFragment   {
 				e.printStackTrace();
 			}
 	        return OK;
-	        
     }
         
  

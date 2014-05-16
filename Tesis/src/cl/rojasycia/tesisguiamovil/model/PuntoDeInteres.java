@@ -6,6 +6,8 @@ public class PuntoDeInteres {
     private String tipoPOI;
 	private double latitudPOI;
 	private double longitudPOI;
+	private boolean favorito;
+	private int imagenPOI;
 
 	public PuntoDeInteres(String nombrePOI, String tipoPOI, double latitudPOI, double longitudPOI) {
 		super();
@@ -48,6 +50,22 @@ public class PuntoDeInteres {
 
 	public void setLongitudPOI(double longitudPOI) {
 		this.longitudPOI = longitudPOI;
+	}
+
+	public boolean isFavorito() {
+		return favorito;
+	}
+
+	public void setFavorito(boolean favorito) {
+		this.favorito = favorito;
+	}
+
+	public int getImagenPOI() {
+		return imagenPOI;
+	}
+
+	public void setImagenPOI(int imagenPOI) {
+		this.imagenPOI = imagenPOI;
 	}
 
 }

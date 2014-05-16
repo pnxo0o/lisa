@@ -1,4 +1,4 @@
-package cl.rojasycia.tesisguiamovil.utils;
+package cl.rojasycia.tesisguiamovil.helpers;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -13,8 +13,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.model.PuntoDeInteres;
+import cl.rojasycia.tesisguiamovil.utils.POISQLiteHelper;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 public class ParserPuntoDeInteres {
 
@@ -35,7 +39,7 @@ public class ParserPuntoDeInteres {
             DocumentBuilder builder = factory.newDocumentBuilder();
             FileInputStream fil = context.openFileInput("poi_descargados.xml");
  
-            //Realizamos lalectura completa del XML
+            //Realizamos la lectura completa del XML
             Document dom = builder.parse(fil);
  
             //Nos posicionamos en el nodo principal del árbol 
@@ -107,12 +111,35 @@ public class ParserPuntoDeInteres {
         return texto.toString();
     }
     
-    public ArrayList<PuntoDeInteres> convertirListaAArreglo(List<PuntoDeInteres> ls) {	
+    public ArrayList<PuntoDeInteres> convertirListaAArreglo(List<PuntoDeInteres> ls, Context context) {	
+    	POISQLiteHelper usdbh = new POISQLiteHelper(context, "DBPoi", null, 1);
+        SQLiteDatabase db = usdbh.getWritableDatabase();
     	ArrayList<PuntoDeInteres> x = new ArrayList<PuntoDeInteres>();
     	if(ls.size() > 0){
 			Iterator<PuntoDeInteres> iterador = ls.listIterator();
 			while( iterador.hasNext() ) {
+				
 				PuntoDeInteres b = (PuntoDeInteres) iterador.next();
+				//pongo imagen
+				if(b.getTipoPOI().equals("UNIV")){
+					b.setImagenPOI(R.drawable.icon_universidad);
+				}
+				else{
+					b.setImagenPOI(R.drawable.icon_alojamiento);
+				}
+				
+				
+				//consulto por checkbox
+				Cursor c = db.rawQuery("SELECT latitudPOI, longitudPOI FROM PuntoDeInteres", null);
+				if (c.moveToFirst()) {
+					if(c.getDouble(0) == b.getLatitudPOI() && c.getDouble(1) == b.getLongitudPOI()){
+						b.setFavorito(true);
+					}
+					else{
+						b.setFavorito(false);
+					}
+				}
+				c.close();
 				x.add(b);
 			}
 		}
