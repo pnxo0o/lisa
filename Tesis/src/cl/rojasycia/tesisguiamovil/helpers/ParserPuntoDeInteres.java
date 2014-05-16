@@ -130,7 +130,7 @@ public class ParserPuntoDeInteres {
 				
 				
 				//consulto por checkbox
-				Cursor c = db.rawQuery("SELECT latitudPOI, longitudPOI FROM PuntoDeInteres", null);
+				Cursor c = db.rawQuery("SELECT latitudPOI, longitudPOI FROM PuntoDeInteres WHERE latitudPOI="+b.getLatitudPOI()+" AND longitudPOI="+b.getLongitudPOI()+"", null);
 				if (c.moveToFirst()) {
 					if(c.getDouble(0) == b.getLatitudPOI() && c.getDouble(1) == b.getLongitudPOI()){
 						b.setFavorito(true);

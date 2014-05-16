@@ -40,6 +40,7 @@ public class Fragment1 extends SherlockFragment   {
 	public static final int FALLO_TIME_OUT = 2;
 	public static final int ERROR_WIFI = 3;
 	public static final int OK = 0;
+	public static final int FALLO = 4;
 	
 
 	private List<String> listDataHeader;
@@ -267,9 +268,9 @@ public class Fragment1 extends SherlockFragment   {
 					fout.close();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				return FALLO;
 			} catch (Exception e) {
-				e.printStackTrace();
+				return FALLO;
 			}
 	        return OK;
     }
@@ -290,6 +291,9 @@ public class Fragment1 extends SherlockFragment   {
         	}
         	else if(result == ERROR_WIFI){
         		ubicacion.showSettingsAlert(getActivity(), "Localización por red no activada", "La localización por red no está activada. Desea activarla?");
+        	}
+        	else if(result == FALLO){
+        		Toast.makeText(getActivity(), "Ocurrió un error obteniendo los lugares", Toast.LENGTH_LONG).show();
         	}
         		
         }
