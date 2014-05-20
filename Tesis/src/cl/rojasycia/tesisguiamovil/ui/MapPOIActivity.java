@@ -18,10 +18,10 @@ import android.widget.ListView;
 import android.view.LayoutInflater;
 import android.view.View;
 import cl.rojasycia.tesisguiamovil.R;
-import cl.rojasycia.tesisguiamovil.helpers.ParserPuntoDeInteres;
 import cl.rojasycia.tesisguiamovil.model.PuntoDeInteres;
 import cl.rojasycia.tesisguiamovil.struct.PuntoDeInteresAdapter;
 import cl.rojasycia.tesisguiamovil.utils.POISQLiteHelper;
+import cl.rojasycia.tesisguiamovil.utils.ParserPuntoDeInteres;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;

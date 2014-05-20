@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import cl.rojasycia.tesisguiamovil.R;
-import cl.rojasycia.tesisguiamovil.helpers.ParserPuntoDeInteres;
 import cl.rojasycia.tesisguiamovil.model.PuntoDeInteres;
 import cl.rojasycia.tesisguiamovil.struct.PuntoDeInteresAdapter;
+import cl.rojasycia.tesisguiamovil.utils.ParserPuntoDeInteres;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

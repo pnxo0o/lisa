@@ -15,7 +15,7 @@ import org.geonames.WebService;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import cl.rojasycia.tesisguiamovil.R;
-import cl.rojasycia.tesisguiamovil.model.Grupo;
+import cl.rojasycia.tesisguiamovil.model.Categoria;
 import cl.rojasycia.tesisguiamovil.struct.ExpandableListAdapter;
 import cl.rojasycia.tesisguiamovil.utils.GPSTracker;
 import cl.rojasycia.tesisguiamovil.utils.NetworkUtil;
@@ -51,7 +51,7 @@ public class Fragment1 extends SherlockFragment   {
 	private ProgressDialog mProgressDialog;
 	private AsyncLatLong latLong;
 	private ExpandableListAdapter listAdapter;
-	private Grupo gp;
+	private Categoria gp;
 	
 	
 	@Override
@@ -149,7 +149,7 @@ public class Fragment1 extends SherlockFragment   {
 			Toast.makeText(getActivity(), "Revise su conexión a internet", Toast.LENGTH_SHORT).show();
 		}
 		else{
-			gp = new Grupo(5, 0);
+			gp = new Categoria(5, 0);
 			latLong  = new AsyncLatLong();
 			latLong.execute();
 		}
@@ -160,7 +160,7 @@ public class Fragment1 extends SherlockFragment   {
 			Toast.makeText(getActivity(), "Revise su conexión a internet", Toast.LENGTH_SHORT).show();
 		}
 		else{
-			gp = new Grupo(grupo, subGrupo);
+			gp = new Categoria(grupo, subGrupo);
 			latLong  = new AsyncLatLong();
 			latLong.execute();
 		}
@@ -197,7 +197,7 @@ public class Fragment1 extends SherlockFragment   {
 			aGPS = new Thread(new Runnable() {
 			    public void run() {
 					try {
-						Thread.sleep(GPSTracker.TIEMPO_GPS+100);
+						Thread.sleep(GPSTracker.TIEMPO_GPS+200);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					} 
@@ -207,7 +207,7 @@ public class Fragment1 extends SherlockFragment   {
 			aWIFI = new Thread(new Runnable() {
 			    public void run() {
 					try {
-						Thread.sleep(GPSTracker.TIEMPO_WIFI+100);
+						Thread.sleep(GPSTracker.TIEMPO_WIFI+200);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					} 

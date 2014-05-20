@@ -1,6 +1,6 @@
 package cl.rojasycia.tesisguiamovil.model;
 
-public class Grupo {
+public class Categoria {
 	
 	public static final int UNIVERSIDAD = 0;
 	public static final int ALOJAMIENTO = 2;
@@ -8,7 +8,7 @@ public class Grupo {
 	
 	String[] grupo;
 	
-	public Grupo(int grupoSeleccionado, int tipoSeleccionado){
+	public Categoria(int grupoSeleccionado, int tipoSeleccionado){
 		if (grupoSeleccionado == UNIVERSIDAD){
 			this.grupo = new String[]{"UNIV"};
 		}

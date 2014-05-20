@@ -16,9 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import cl.rojasycia.tesisguiamovil.R;
-import cl.rojasycia.tesisguiamovil.helpers.DownloaderNoticia;
 import cl.rojasycia.tesisguiamovil.model.Noticia;
 import cl.rojasycia.tesisguiamovil.model.Universidad;
+import cl.rojasycia.tesisguiamovil.utils.DownloaderNoticia;
 import cl.rojasycia.tesisguiamovil.utils.NetworkUtil;
 
 import com.actionbarsherlock.app.SherlockActivity;

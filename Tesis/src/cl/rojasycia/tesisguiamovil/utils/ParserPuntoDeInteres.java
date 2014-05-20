@@ -1,4 +1,4 @@
-package cl.rojasycia.tesisguiamovil.helpers;
+package cl.rojasycia.tesisguiamovil.utils;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import org.w3c.dom.NodeList;
 
 import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.model.PuntoDeInteres;
-import cl.rojasycia.tesisguiamovil.utils.POISQLiteHelper;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

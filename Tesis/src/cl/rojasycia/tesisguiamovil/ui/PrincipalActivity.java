@@ -42,14 +42,14 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 		mTitle = mDrawerTitle = "Guia Móvil del Universitario";
 
 		// Generate title
-		title = new String[] { "Buscar",
+		title = new String[] { "Busqueda",
 							   "Universidades",
-							   "Acerca de" };
+							   "Favoritos" };
 
 		// Generate subtitle
 		subtitle = new String[] { "encuentre lugares",
 								  "y noticias",
-				  				   "la aplicación :)" };
+				  				   "sus lugares guardados" };
 
 		// Generate icon
 		icon = new int[] { R.drawable.collections_cloud, R.drawable.action_settings,
