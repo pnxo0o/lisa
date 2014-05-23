@@ -253,7 +253,7 @@ public class Fragment1 extends SherlockFragment   {
 				if(searchResult.size() > 0){
 					Log.e("yo","descarga poi lista");
 					Iterator<Toponym> iterador = searchResult.listIterator(); 
-					sb.append("<pois>");
+					sb.append("<?xml version='1.0' encoding='UTF-8'?><pois>");
 					while( iterador.hasNext() ) {
 						Toponym b = (Toponym) iterador.next();
 						sb.append("<poi>");
