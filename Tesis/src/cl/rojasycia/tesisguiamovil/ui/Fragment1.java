@@ -191,7 +191,7 @@ public class Fragment1 extends SherlockFragment   {
 				fout = new OutputStreamWriter(getActivity().openFileOutput("poi_descargados.xml", Context.MODE_PRIVATE));
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
-				Log.e("yo","cagamos escribiendo el xml culiao");
+				Log.e("yo","cagamos escribiendo el xml culiao xd");
 			}
 			sb = new StringBuilder();
 			aGPS = new Thread(new Runnable() {
