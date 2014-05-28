@@ -55,7 +55,7 @@ public class ParserPuntoDeInteres {
 //            Element root = dom.getDocumentElement();
 //            NodeList items = root.getElementsByTagName("poi");
             
-        	parser.setInput(context.openFileInput("poi_descargados.xml"), "utf-8");
+        	parser.setInput(context.openFileInput("poi_descargados.xml"), null);
         	
         	int evento = parser.getEventType();
             

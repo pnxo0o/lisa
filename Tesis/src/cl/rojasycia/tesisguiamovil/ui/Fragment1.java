@@ -186,37 +186,31 @@ public class Fragment1 extends SherlockFragment   {
 		private double latitude;
 		private double longitude;
 		private GPSTracker ubicacion;
-		XmlSerializer ser;
+		private XmlSerializer ser;
 		
 		@Override
         protected void onPreExecute() {
-			mProgressDialog.show();
 			ubicacion = new GPSTracker(getActivity(), NetworkUtil.getConnectivityStatus(getActivity()));
 			
 			ser = Xml.newSerializer();
 			 
-			//Creamos un fichero en memoria interna
 			try {
 				fout = new OutputStreamWriter(
-			    		getActivity().openFileOutput("poi_descargados.xml",
-			            Context.MODE_PRIVATE));
+						getActivity().openFileOutput("poi_descargados.xml",
+				        Context.MODE_PRIVATE));
+				ser.setOutput(fout);
 			} catch (FileNotFoundException e1) {
 				Log.e("yo","cagamos escribiendo el xml culiao xd");
 				e1.printStackTrace();
-			}
-			 
-			//Asignamos el resultado del serializer al fichero
-			try {
-				ser.setOutput(fout);
-			} catch (IllegalArgumentException e1) {
-				Log.e("yo","1");
-				e1.printStackTrace();
-			} catch (IllegalStateException e1) {
-				Log.e("yo","2");
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				Log.e("yo","3");
-				e1.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				Log.e("yo","cagamos escribiendo el xml culiao xd");
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				Log.e("yo","cagamos escribiendo el xml culiao xd");
+				e.printStackTrace();
+			} catch (IOException e) {
+				Log.e("yo","cagamos escribiendo el xml culiao xd");
+				e.printStackTrace();
 			}
 			
 //			try {
@@ -247,6 +241,7 @@ public class Fragment1 extends SherlockFragment   {
 				}
 
 			 });
+			mProgressDialog.show();
         }
  
         @Override
@@ -290,29 +285,29 @@ public class Fragment1 extends SherlockFragment   {
 					Log.e("yo","descarga poi lista");
 					Iterator<Toponym> iterador = searchResult.listIterator(); 
 //					sb.append("<pois>");
+					
+
+					ser.startTag("", "pois");
+
 					while( iterador.hasNext() ) {
 						
 						Toponym b = (Toponym) iterador.next();
 						
-						ser.startTag("", "poi");
-						 
-//						ser.startTag("", "nombre");
-//						ser.text(b.getName());
-//						ser.endTag("", "nombre");
-						 
+						ser.startTag("", "poi");					 
+						ser.startTag("", "nombre");
+						ser.text(b.getName());
+						ser.endTag("", "nombre");						 
 						ser.startTag("", "tipo");
 						ser.text(b.getFeatureCode());
-						ser.endTag("", "tipo");
-						
-//						ser.startTag("", "latitud");
-//						ser.text(b.getLatitude()+"");
-//						ser.endTag("", "latitud");
-//						
-//						ser.startTag("", "longitud");
-//						ser.text(b.getLongitude()+"");
-//						ser.endTag("", "longitud");
+						ser.endTag("", "tipo");						
+						ser.startTag("", "latitud");
+						ser.text(b.getLatitude()+"");
+						ser.endTag("", "latitud");						
+						ser.startTag("", "longitud");
+						ser.text(b.getLongitude()+"");
+						ser.endTag("", "longitud");
 						 
-						ser.endTag("", "poi");
+//						ser.endTag("", "poi");
 //						sb.append("<poi>");
 //						sb.append("<nombre>" + b.getName() + "</nombre>");
 //						sb.append("<tipo>" + b.getFeatureCode() + "</tipo>");
@@ -321,9 +316,8 @@ public class Fragment1 extends SherlockFragment   {
 //						sb.append("</poi>");
 						
 					}
+					ser.endTag("", "pois");
 
-					
-					
 					ser.endDocument();
 					fout.close();
 					
