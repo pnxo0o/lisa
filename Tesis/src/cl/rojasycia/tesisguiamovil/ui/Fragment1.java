@@ -198,7 +198,6 @@ public class Fragment1 extends SherlockFragment   {
 				fout = new OutputStreamWriter(
 						getActivity().openFileOutput("poi_descargados.xml",
 				        Context.MODE_PRIVATE));
-				ser.setOutput(fout);
 			} catch (FileNotFoundException e1) {
 				Log.e("yo","cagamos escribiendo el xml culiao xd");
 				e1.printStackTrace();
@@ -208,18 +207,8 @@ public class Fragment1 extends SherlockFragment   {
 			} catch (IllegalStateException e) {
 				Log.e("yo","cagamos escribiendo el xml culiao xd");
 				e.printStackTrace();
-			} catch (IOException e) {
-				Log.e("yo","cagamos escribiendo el xml culiao xd");
-				e.printStackTrace();
 			}
-			
-//			try {
-//				fout = new OutputStreamWriter(getActivity().openFileOutput("poi_descargados.xml", Context.MODE_PRIVATE));
-//			} catch (FileNotFoundException e1) {
-//				e1.printStackTrace();
-//				Log.e("yo","cagamos escribiendo el xml culiao xd");
-//			}
-//			sb = new StringBuilder();
+
 			
 			aGPS = new Thread(new Runnable() {
 			    public void run() {
@@ -273,7 +262,6 @@ public class Fragment1 extends SherlockFragment   {
 	        		
 	        }
 	        
-
 	        
 	        Log.e("yo","ubicacion lista");
        	
@@ -286,7 +274,8 @@ public class Fragment1 extends SherlockFragment   {
 					Iterator<Toponym> iterador = searchResult.listIterator(); 
 //					sb.append("<pois>");
 					
-
+					
+					ser.setOutput(fout);
 					ser.startTag("", "pois");
 
 					while( iterador.hasNext() ) {
@@ -305,9 +294,9 @@ public class Fragment1 extends SherlockFragment   {
 						ser.endTag("", "latitud");						
 						ser.startTag("", "longitud");
 						ser.text(b.getLongitude()+"");
-						ser.endTag("", "longitud");
-						 
-//						ser.endTag("", "poi");
+						ser.endTag("", "longitud");						 
+						ser.endTag("", "poi");
+						
 //						sb.append("<poi>");
 //						sb.append("<nombre>" + b.getName() + "</nombre>");
 //						sb.append("<tipo>" + b.getFeatureCode() + "</tipo>");
@@ -325,9 +314,12 @@ public class Fragment1 extends SherlockFragment   {
 //					fout.write(sb.toString());
 //					fout.close();
 				}
+				
 			} catch (IOException e) {
+				Log.e("yo","IOException");
 				return FALLO;
 			} catch (Exception e) {
+				Log.e("yo","Exception");
 				return FALLO;
 			}
 	        
