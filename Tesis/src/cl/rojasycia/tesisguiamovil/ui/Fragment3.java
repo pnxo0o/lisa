@@ -10,7 +10,9 @@ import cl.rojasycia.tesisguiamovil.struct.PuntoDeInteresAdapter;
 import cl.rojasycia.tesisguiamovil.utils.POISQLiteHelper;
 import cl.rojasycia.tesisguiamovil.utils.ParserPuntoDeInteres;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.TextView;
 
 public class Fragment3 extends SherlockFragment {
 	
@@ -27,6 +30,7 @@ public class Fragment3 extends SherlockFragment {
 	private ArrayList<PuntoDeInteres> puntos;
 	private ListView listaVisualizada;
 	private PuntoDeInteresAdapter adaptador;
+	private TextView textoNoPoi;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +38,7 @@ public class Fragment3 extends SherlockFragment {
 		View rootView = inflater.inflate(R.layout.fragment3, container, false);
 		
 		listaVisualizada = (ListView)rootView.findViewById(R.id.listViewFavPoi);
+		textoNoPoi = (TextView)rootView.findViewById(R.id.textView2);
 		
 		listaGuardadaPtos = new ParserPuntoDeInteres(getActivity());
 		puntos = listaGuardadaPtos.getPOIDesdeBD(getActivity());
@@ -42,6 +47,12 @@ public class Fragment3 extends SherlockFragment {
 		if(puntos !=null){
 			adaptador = new PuntoDeInteresAdapter (getActivity(), R.layout.item_poi, puntos );
 			listaVisualizada.setAdapter(adaptador);
+			listaVisualizada.setVisibility(View.VISIBLE);
+			textoNoPoi.setVisibility(View.GONE);
+		}
+		else{
+			listaVisualizada.setVisibility(View.GONE);
+			textoNoPoi.setVisibility(View.VISIBLE);
 		}
 		
 		listaVisualizada.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -87,18 +98,16 @@ public class Fragment3 extends SherlockFragment {
     						puntos.remove(posicion);
     						adaptador.notifyDataSetChanged();
     	                    adaptador.notifyDataSetInvalidated();
+
     					}
     					else if(positionl == 1){
-//    							Intent intent = new Intent(
-//    			            			Intent.ACTION_VIEW,
-//    			            			Uri.parse("geo:<"
-//    			            					+latitud+">,<"
-//    			            					+longitud+">"
-//    			            					+ "?q=<"
-//    			            					+adaptador.getItem(posicion).getLatitudPOI()+">,<"
-//    			            					+adaptador.getItem(posicion).getLongitudPOI()+">"
-//    			            					+ "("+adaptador.getItem(posicion).getNombrePOI()+")"));
-//    			            	startActivity(intent);
+    						String uriBegin = "geo:" + adaptador.getItem(posicion).getLatitudPOI() + "," + adaptador.getItem(posicion).getLongitudPOI(); 
+    						String query = adaptador.getItem(posicion).getLatitudPOI() + "," + adaptador.getItem(posicion).getLongitudPOI() + "(" + adaptador.getItem(posicion).getNombrePOI() + ")"; 
+    						String encodedQuery = Uri.encode(query); 
+    						String uriString = uriBegin + "?q=" + encodedQuery + "&z=16"; 
+    						Uri uri = Uri.parse(uriString); 
+    						Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW, uri); 
+    						startActivity(mapIntent);
     					}
     					dlg.dismiss();
     				}

@@ -1,6 +1,9 @@
 package cl.rojasycia.tesisguiamovil.utils;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,16 +15,20 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xmlpull.v1.XmlPullParser;
 
 import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.model.PuntoDeInteres;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Xml;
 
 public class ParserPuntoDeInteres {
 
     private Context context;
+	private ArrayList<PuntoDeInteres> puntoDeInteres;
 
 	public ParserPuntoDeInteres(Context context)
     {
@@ -29,72 +36,134 @@ public class ParserPuntoDeInteres {
     }
     
     public List<PuntoDeInteres> getPOI(){
-    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        List<PuntoDeInteres> listaPuntos = new ArrayList<PuntoDeInteres>();
- 
+//    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//        List<PuntoDeInteres> listaPuntos = new ArrayList<PuntoDeInteres>();
+// 
+        
+        XmlPullParser parser = Xml.newPullParser();
+        
         try
         {
-            //Creamos un nuevo parser DOM
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            FileInputStream fil = context.openFileInput("poi_descargados.xml");
- 
-            //Realizamos la lectura completa del XML
-            Document dom = builder.parse(fil);
- 
-            //Nos posicionamos en el nodo principal del árbol 
-            Element root = dom.getDocumentElement();
- 
-            //Localizamos todos los elementos <item>
-            NodeList items = root.getElementsByTagName("poi");
- 
-            //Recorremos 
-            for (int i=0; i<items.getLength(); i++)
+//            //Creamos un nuevo parser DOM
+//            DocumentBuilder builder = factory.newDocumentBuilder();         
+//            FileInputStream fil = context.openFileInput("poi_descargados.xml");
+//            InputStream is = fil;  
+//            Reader reader = new InputStreamReader(is, "UTF8"); // look up which encoding your file should have  
+//            InputSource source = new InputSource(reader);  
+//            Document dom = builder.parse(source);
+//
+//            Element root = dom.getDocumentElement();
+//            NodeList items = root.getElementsByTagName("poi");
+            
+        	parser.setInput(context.openFileInput("poi_descargados.xml"), "utf-8");
+        	
+        	int evento = parser.getEventType();
+            
+        	PuntoDeInteres poiActual = null;
+            
+            while (evento != XmlPullParser.END_DOCUMENT)
             {
-                PuntoDeInteres poi = new PuntoDeInteres();
- 
-                //Obtenemos poi
-                Node item = items.item(i);
- 
-                //Obtenemos la lista de datos de poi actual
-                NodeList datosPoi = item.getChildNodes();
- 
-                //Procesamos cada dato 
-                for (int j=0; j<datosPoi.getLength(); j++)
+                String etiqueta = null;
+                
+                switch (evento)
                 {
-                    Node dato = datosPoi.item(j);
-                    String etiqueta = dato.getNodeName();
- 
-                    if (etiqueta.equals("nombre"))
-                    {
-                        String texto = obtenerTexto(dato);
-                        poi.setNombrePOI(texto);;
-                    }
-                    else if (etiqueta.equals("tipo"))
-                    {
-                    	String texto = obtenerTexto(dato);
-                    	poi.setTipoPOI(texto);
-                    }
-                    else if (etiqueta.equals("latitud"))
-                    {
-                    	String texto = obtenerTexto(dato);
-                    	poi.setLatitudPOI(Double.parseDouble(texto));;
-                    }
-                    else if (etiqueta.equals("longitud"))
-                    {
-                    	String texto = obtenerTexto(dato);
-                    	poi.setLongitudPOI(Double.parseDouble(texto));;
-                    }
+                    case XmlPullParser.START_DOCUMENT:
+                    	
+                    	puntoDeInteres = new ArrayList<PuntoDeInteres>();
+                        break;
+                        
+                    case XmlPullParser.START_TAG:
+                    	
+                    	etiqueta = parser.getName();
+                        
+                        if (etiqueta.equals("poi"))
+                        {
+                        	poiActual = new PuntoDeInteres();
+                        } 
+                        else if (poiActual != null)
+                        {
+                            if (etiqueta.equals("nombre"))
+                            {
+                            	poiActual.setNombrePOI(parser.nextText());
+                            } 
+                            else if (etiqueta.equals("tipo"))
+                            {
+                            	poiActual.setTipoPOI(parser.nextText());
+                            } 
+                            else if (etiqueta.equals("latitud"))
+                            {
+                            	poiActual.setLatitudPOI(Double.parseDouble(parser.nextText()));
+                            } 
+                            else if (etiqueta.equals("longitud"))
+                            {
+                            	poiActual.setLongitudPOI(Double.parseDouble(parser.nextText()));
+                            } 
+                        }
+                        break;
+                        
+                    case XmlPullParser.END_TAG:
+                    	
+                    	etiqueta = parser.getName();
+                    	
+                        if (etiqueta.equals("poi") && poiActual != null)
+                        {
+                        	puntoDeInteres.add(poiActual);
+                        } 
+                        break;
                 }
- 
-                listaPuntos.add(poi);
+                
+                evento = parser.next();
             }
+// 
+//            //Recorremos 
+//            for (int i=0; i<items.getLength(); i++)
+//            {
+//                PuntoDeInteres poi = new PuntoDeInteres();
+// 
+//                //Obtenemos poi
+//                Node item = items.item(i);
+// 
+//                //Obtenemos la lista de datos de poi actual
+//                NodeList datosPoi = item.getChildNodes();
+// 
+//                //Procesamos cada dato 
+//                for (int j=0; j<datosPoi.getLength(); j++)
+//                {
+//                    Node dato = datosPoi.item(j);
+//                    String etiqueta = dato.getNodeName();
+// 
+//                    if (etiqueta.equals("nombre"))
+//                    {
+//                        String texto = obtenerTexto(dato);
+//                        poi.setNombrePOI(texto);;
+//                    }
+//                    else if (etiqueta.equals("tipo"))
+//                    {
+//                    	String texto = obtenerTexto(dato);
+//                    	poi.setTipoPOI(texto);
+//                    }
+//                    else if (etiqueta.equals("latitud"))
+//                    {
+//                    	String texto = obtenerTexto(dato);
+//                    	poi.setLatitudPOI(Double.parseDouble(texto));;
+//                    }
+//                    else if (etiqueta.equals("longitud"))
+//                    {
+//                    	String texto = obtenerTexto(dato);
+//                    	poi.setLongitudPOI(Double.parseDouble(texto));;
+//                    }
+//                }
+// 
+//                listaPuntos.add(poi);
+//            }
         }
         catch (Exception ex)
         {
             throw new RuntimeException(ex);
         }
  
-        return listaPuntos;
+//        return listaPuntos;
+        return puntoDeInteres;
     }
     
     private String obtenerTexto(Node dato)

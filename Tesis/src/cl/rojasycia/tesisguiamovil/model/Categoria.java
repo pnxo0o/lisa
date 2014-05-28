@@ -17,16 +17,16 @@ public class Categoria {
 		}
 		else if(grupoSeleccionado == ALOJAMIENTO){
 			if(tipoSeleccionado == 0){
-				this.grupo = new String[]{"RHSE", "GHSE","UNIV"};//todos los alojamientos
+				this.grupo = new String[]{"RHSE", "GHSE", "HTL"};//todos los alojamientos
 			}
 			else if(tipoSeleccionado == 1){
-				this.grupo = new String[]{"RHSE", "UNIV"};//residenciales
+				this.grupo = new String[]{"RHSE"};//residenciales
 			}
 			else if(tipoSeleccionado == 2){
-				this.grupo = new String[]{"GHSE", "UNIV"};//hostales
+				this.grupo = new String[]{"GHSE"};//hostales
 			}
 			else if(tipoSeleccionado == 3){
-				this.grupo = new String[]{"UNIV"};//hoteles HTL
+				this.grupo = new String[]{"HTL"};//hoteles HTL
 			}
 		}
 		else if(grupoSeleccionado == 0){

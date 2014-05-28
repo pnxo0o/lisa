@@ -11,6 +11,7 @@ import java.util.List;
 import org.geonames.FeatureClass;
 import org.geonames.Toponym;
 import org.geonames.WebService;
+import org.xmlpull.v1.XmlSerializer;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -25,6 +26,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -173,27 +175,58 @@ public class Fragment1 extends SherlockFragment   {
 		intent.putExtra("longitud", longitud);
 		startActivity(intent);
 	}
+	
+	
 
 	private class AsyncLatLong extends AsyncTask<String, Void, Integer>{
 
 		private Thread aGPS, aWIFI;
 		private OutputStreamWriter fout;
-		private StringBuilder sb;
+//		private StringBuilder sb;
 		private double latitude;
 		private double longitude;
 		private GPSTracker ubicacion;
+		XmlSerializer ser;
 		
 		@Override
         protected void onPreExecute() {
 			mProgressDialog.show();
 			ubicacion = new GPSTracker(getActivity(), NetworkUtil.getConnectivityStatus(getActivity()));
+			
+			ser = Xml.newSerializer();
+			 
+			//Creamos un fichero en memoria interna
 			try {
-				fout = new OutputStreamWriter(getActivity().openFileOutput("poi_descargados.xml", Context.MODE_PRIVATE));
+				fout = new OutputStreamWriter(
+			    		getActivity().openFileOutput("poi_descargados.xml",
+			            Context.MODE_PRIVATE));
 			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
 				Log.e("yo","cagamos escribiendo el xml culiao xd");
+				e1.printStackTrace();
 			}
-			sb = new StringBuilder();
+			 
+			//Asignamos el resultado del serializer al fichero
+			try {
+				ser.setOutput(fout);
+			} catch (IllegalArgumentException e1) {
+				Log.e("yo","1");
+				e1.printStackTrace();
+			} catch (IllegalStateException e1) {
+				Log.e("yo","2");
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				Log.e("yo","3");
+				e1.printStackTrace();
+			}
+			
+//			try {
+//				fout = new OutputStreamWriter(getActivity().openFileOutput("poi_descargados.xml", Context.MODE_PRIVATE));
+//			} catch (FileNotFoundException e1) {
+//				e1.printStackTrace();
+//				Log.e("yo","cagamos escribiendo el xml culiao xd");
+//			}
+//			sb = new StringBuilder();
+			
 			aGPS = new Thread(new Runnable() {
 			    public void run() {
 					try {
@@ -245,33 +278,66 @@ public class Fragment1 extends SherlockFragment   {
 	        		
 	        }
 	        
+
+	        
 	        Log.e("yo","ubicacion lista");
-	        	
+       	
 	        try {
 	        	WebService.setUserName("pnxo0o");
 				List<Toponym> searchResult = WebService.findNearby(latitude, longitude, 250.0 ,FeatureClass.S ,gp.getGrupo(), "es", 12);
+		        
 				if(searchResult.size() > 0){
 					Log.e("yo","descarga poi lista");
 					Iterator<Toponym> iterador = searchResult.listIterator(); 
-					sb.append("<?xml version='1.0' encoding='UTF-8'?><pois>");
+//					sb.append("<pois>");
 					while( iterador.hasNext() ) {
+						
 						Toponym b = (Toponym) iterador.next();
-						sb.append("<poi>");
-						sb.append("<nombre>" + b.getName() + "</nombre>");
-						sb.append("<tipo>" + b.getFeatureCode() + "</tipo>");
-						sb.append("<latitud>" + b.getLatitude() + "</latitud>");
-						sb.append("<longitud>" + b.getLongitude() + "</longitud>");
-						sb.append("</poi>");			  
+						
+						ser.startTag("", "poi");
+						 
+//						ser.startTag("", "nombre");
+//						ser.text(b.getName());
+//						ser.endTag("", "nombre");
+						 
+						ser.startTag("", "tipo");
+						ser.text(b.getFeatureCode());
+						ser.endTag("", "tipo");
+						
+//						ser.startTag("", "latitud");
+//						ser.text(b.getLatitude()+"");
+//						ser.endTag("", "latitud");
+//						
+//						ser.startTag("", "longitud");
+//						ser.text(b.getLongitude()+"");
+//						ser.endTag("", "longitud");
+						 
+						ser.endTag("", "poi");
+//						sb.append("<poi>");
+//						sb.append("<nombre>" + b.getName() + "</nombre>");
+//						sb.append("<tipo>" + b.getFeatureCode() + "</tipo>");
+//						sb.append("<latitud>" + b.getLatitude() + "</latitud>");
+//						sb.append("<longitud>" + b.getLongitude() + "</longitud>");
+//						sb.append("</poi>");
+						
 					}
-					sb.append("</pois>");
-					fout.write(sb.toString());
+
+					
+					
+					ser.endDocument();
 					fout.close();
+					
+//					sb.append("</pois>");
+//					fout.write(sb.toString());
+//					fout.close();
 				}
 			} catch (IOException e) {
 				return FALLO;
 			} catch (Exception e) {
 				return FALLO;
 			}
+	        
+	        
 	        return OK;
     }
         

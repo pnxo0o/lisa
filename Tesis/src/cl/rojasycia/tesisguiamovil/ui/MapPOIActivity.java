@@ -177,16 +177,13 @@ public class MapPOIActivity extends SherlockFragmentActivity {
     							adaptador.getItem(posicion).setFavorito(false);
     						}
     						else if(positionl == 1){
-    							Intent intent = new Intent(
-    			            			Intent.ACTION_VIEW,
-    			            			Uri.parse("geo:<"
-    			            					+latitud+">,<"
-    			            					+longitud+">"
-    			            					+ "?q=<"
-    			            					+adaptador.getItem(posicion).getLatitudPOI()+">,<"
-    			            					+adaptador.getItem(posicion).getLongitudPOI()+">"
-    			            					+ "("+adaptador.getItem(posicion).getNombrePOI()+")"));
-    			            	startActivity(intent);
+    							String uriBegin = "geo:" + adaptador.getItem(posicion).getLatitudPOI() + "," + adaptador.getItem(posicion).getLongitudPOI(); 
+        						String query = adaptador.getItem(posicion).getLatitudPOI() + "," + adaptador.getItem(posicion).getLongitudPOI() + "(" + adaptador.getItem(posicion).getNombrePOI() + ")"; 
+        						String encodedQuery = Uri.encode(query); 
+        						String uriString = uriBegin + "?q=" + encodedQuery + "&z=16"; 
+        						Uri uri = Uri.parse(uriString); 
+        						Intent mapIntent = new Intent(android.content.Intent.ACTION_VIEW, uri); 
+        						startActivity(mapIntent);
     						}
     						dlg.dismiss();
     					}

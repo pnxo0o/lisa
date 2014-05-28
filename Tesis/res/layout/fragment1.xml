@@ -42,18 +42,28 @@
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
         	android:onClick="buscarAqui"
-        	android:paddingBottom="15dp"
-        	android:paddingTop="15dp"
-        	android:text="@string/buscar_aqui" />
+        	style="@style/st_main_button"
+        	android:drawableLeft="@drawable/ic_action_place_dark"
+        	android:text="@string/buscar_aqui"
+        	 />
     	
     </LinearLayout>
+    
+    <View
+        android:id="@+id/view3"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp" />
 
     <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white" >
+        android:divider="@null"
+        android:dividerHeight="2dp" >
 
         <ExpandableListView
             android:id="@+id/listViewexp"

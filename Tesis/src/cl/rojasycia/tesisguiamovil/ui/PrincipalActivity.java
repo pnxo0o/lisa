@@ -52,8 +52,8 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 				  				   "sus lugares guardados" };
 
 		// Generate icon
-		icon = new int[] { R.drawable.collections_cloud, R.drawable.action_settings,
-				R.drawable.action_about };
+		icon = new int[] { R.drawable.ic_action_place, R.drawable.ic_action_make_available_offline,
+				R.drawable.ic_action_important };
 
 		// Locate DrawerLayout in drawer_main.xml
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
