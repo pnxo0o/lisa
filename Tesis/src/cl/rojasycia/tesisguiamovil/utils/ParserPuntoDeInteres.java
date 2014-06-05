@@ -1,21 +1,9 @@
 package cl.rojasycia.tesisguiamovil.utils;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xmlpull.v1.XmlPullParser;
 
 import cl.rojasycia.tesisguiamovil.R;
@@ -166,18 +154,6 @@ public class ParserPuntoDeInteres {
         return puntoDeInteres;
     }
     
-    private String obtenerTexto(Node dato)
-    {
-        StringBuilder texto = new StringBuilder();
-        NodeList fragmentos = dato.getChildNodes();
- 
-        for (int k=0;k<fragmentos.getLength();k++)
-        {
-            texto.append(fragmentos.item(k).getNodeValue());
-        }
- 
-        return texto.toString();
-    }
     
     public ArrayList<PuntoDeInteres> convertirListaAArreglo(List<PuntoDeInteres> ls, Context context) {	
     	POISQLiteHelper usdbh = new POISQLiteHelper(context, "DBPoi", null, 1);
@@ -192,8 +168,11 @@ public class ParserPuntoDeInteres {
 				if(b.getTipoPOI().equals("UNIV")){
 					b.setImagenPOI(R.drawable.icon_universidad);
 				}
-				else{
+				else if(b.getTipoPOI().equals("RHSE") || b.getTipoPOI().equals("GHSE") || b.getTipoPOI().equals("HTL")){
 					b.setImagenPOI(R.drawable.icon_alojamiento);
+				}
+				else{
+					b.setImagenPOI(R.drawable.icon_universidad);
 				}
 				
 				

@@ -39,7 +39,7 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 		setContentView(R.layout.drawer_main);
 
 		// Get the Title
-		mTitle = mDrawerTitle = "Guia Móvil del Universitario";
+		mTitle = mDrawerTitle = "Pati' perro";
 
 		// Generate title
 		title = new String[] { "Busqueda",

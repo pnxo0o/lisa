@@ -4,6 +4,7 @@ public class Categoria {
 	
 	public static final int UNIVERSIDAD = 0;
 	public static final int ALOJAMIENTO = 2;
+	public static final int SERVICIOS = 4;
 	public static final int CERCA = 5;
 	
 	String[] grupo;
@@ -29,11 +30,10 @@ public class Categoria {
 				this.grupo = new String[]{"HTL"};//hoteles HTL
 			}
 		}
-		else if(grupoSeleccionado == 0){
-			this.grupo = new String[]{"UNIV"};
-		}
-		else if(grupoSeleccionado == 0){
-			this.grupo = new String[]{"UNIV"};
+		else if(grupoSeleccionado == SERVICIOS){
+			if(tipoSeleccionado == 0){
+				this.grupo = new String[]{"RHSE", "GHSE", "HTL"};//todos los alojamientos
+			}
 		}
 		else if(grupoSeleccionado == 5){
 			this.grupo = new String[]{"UNIV", "RHSE", "GHSE"};
