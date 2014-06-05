@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">Pati&#34; perro</string>
-    <string name="app_name_android">Pati&#34; perro</string>
+    <string name="app_name">Pati&quot; Perro</string>
+    <string name="app_name_android">Pati Perro</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="lugares">Seleccione su búsqueda</string>
@@ -12,6 +12,6 @@
     <string name="buscar_aqui">Buscar en esta zona</string>
     <string name="linksitio">sitio web</string>
     <string name="leer_noticias">Leer Noticias</string>
-    <string name="no_poi">No hay Puntos de Interés guardados ):</string>
+    <string name="no_poi">No hay Lugares guardados ):</string>
 
 </resources>

@@ -24,29 +24,13 @@ public class ParserPuntoDeInteres {
     }
     
     public List<PuntoDeInteres> getPOI(){
-//    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-//        List<PuntoDeInteres> listaPuntos = new ArrayList<PuntoDeInteres>();
-// 
-        
+    	
         XmlPullParser parser = Xml.newPullParser();
         
         try
-        {
-//            //Creamos un nuevo parser DOM
-//            DocumentBuilder builder = factory.newDocumentBuilder();         
-//            FileInputStream fil = context.openFileInput("poi_descargados.xml");
-//            InputStream is = fil;  
-//            Reader reader = new InputStreamReader(is, "UTF8"); // look up which encoding your file should have  
-//            InputSource source = new InputSource(reader);  
-//            Document dom = builder.parse(source);
-//
-//            Element root = dom.getDocumentElement();
-//            NodeList items = root.getElementsByTagName("poi");
-            
-        	parser.setInput(context.openFileInput("poi_descargados.xml"), null);
-        	
+        {    
+        	parser.setInput(context.openFileInput("poi_descargados.xml"), null);      	
         	int evento = parser.getEventType();
-            
         	PuntoDeInteres poiActual = null;
             
             while (evento != XmlPullParser.END_DOCUMENT)
@@ -102,55 +86,12 @@ public class ParserPuntoDeInteres {
                 
                 evento = parser.next();
             }
-// 
-//            //Recorremos 
-//            for (int i=0; i<items.getLength(); i++)
-//            {
-//                PuntoDeInteres poi = new PuntoDeInteres();
-// 
-//                //Obtenemos poi
-//                Node item = items.item(i);
-// 
-//                //Obtenemos la lista de datos de poi actual
-//                NodeList datosPoi = item.getChildNodes();
-// 
-//                //Procesamos cada dato 
-//                for (int j=0; j<datosPoi.getLength(); j++)
-//                {
-//                    Node dato = datosPoi.item(j);
-//                    String etiqueta = dato.getNodeName();
-// 
-//                    if (etiqueta.equals("nombre"))
-//                    {
-//                        String texto = obtenerTexto(dato);
-//                        poi.setNombrePOI(texto);;
-//                    }
-//                    else if (etiqueta.equals("tipo"))
-//                    {
-//                    	String texto = obtenerTexto(dato);
-//                    	poi.setTipoPOI(texto);
-//                    }
-//                    else if (etiqueta.equals("latitud"))
-//                    {
-//                    	String texto = obtenerTexto(dato);
-//                    	poi.setLatitudPOI(Double.parseDouble(texto));;
-//                    }
-//                    else if (etiqueta.equals("longitud"))
-//                    {
-//                    	String texto = obtenerTexto(dato);
-//                    	poi.setLongitudPOI(Double.parseDouble(texto));;
-//                    }
-//                }
-// 
-//                listaPuntos.add(poi);
-//            }
         }
         catch (Exception ex)
         {
             throw new RuntimeException(ex);
         }
- 
-//        return listaPuntos;
+
         return puntoDeInteres;
     }
     
@@ -170,6 +111,13 @@ public class ParserPuntoDeInteres {
 				}
 				else if(b.getTipoPOI().equals("RHSE") || b.getTipoPOI().equals("GHSE") || b.getTipoPOI().equals("HTL")){
 					b.setImagenPOI(R.drawable.icon_alojamiento);
+				}
+				else if(b.getTipoPOI().equals("RESTO")){
+					b.setImagenPOI(R.drawable.icon_alimentacion);
+				}
+				
+				else if(b.getTipoPOI().equals("PP") || b.getTipoPOI().equals("HSP")){
+					b.setImagenPOI(R.drawable.icon_servicios);
 				}
 				else{
 					b.setImagenPOI(R.drawable.icon_universidad);
@@ -203,14 +151,24 @@ public class ParserPuntoDeInteres {
 		if (c.moveToFirst()) {
 		     do {
 		    	 
-		    	 PuntoDeInteres p = new PuntoDeInteres(c.getString(0), c.getString(1), c.getDouble(2), c.getDouble(3));
-		    	 if(p.getTipoPOI().equals("UNIV")){
-						p.setImagenPOI(R.drawable.icon_universidad);
+		    	 PuntoDeInteres b = new PuntoDeInteres(c.getString(0), c.getString(1), c.getDouble(2), c.getDouble(3));
+		    	 if(b.getTipoPOI().equals("UNIV")){
+						b.setImagenPOI(R.drawable.icon_universidad);
+					}
+					else if(b.getTipoPOI().equals("RHSE") || b.getTipoPOI().equals("GHSE") || b.getTipoPOI().equals("HTL")){
+						b.setImagenPOI(R.drawable.icon_alojamiento);
+					}
+					else if(b.getTipoPOI().equals("RESTO")){
+						b.setImagenPOI(R.drawable.icon_alimentacion);
+					}
+					
+					else if(b.getTipoPOI().equals("PP") || b.getTipoPOI().equals("HSP")){
+						b.setImagenPOI(R.drawable.icon_servicios);
 					}
 					else{
-						p.setImagenPOI(R.drawable.icon_alojamiento);
+						b.setImagenPOI(R.drawable.icon_universidad);
 					}
-		    	 puntosSQL.add(p);
+		    	 puntosSQL.add(b);
 		     
 		     } while(c.moveToNext());
 		     return puntosSQL;

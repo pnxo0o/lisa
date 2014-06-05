@@ -28,6 +28,7 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 	Fragment fragment1 = new Fragment1();
 	Fragment fragment2 = new Fragment2();
 	Fragment fragment3 = new Fragment3();
+	Fragment fragment4 = new Fragment4();
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 	
@@ -39,21 +40,25 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 		setContentView(R.layout.drawer_main);
 
 		// Get the Title
-		mTitle = mDrawerTitle = "Pati' perro";
+		mTitle = mDrawerTitle = "Pati Perro";
 
 		// Generate title
 		title = new String[] { "Busqueda",
 							   "Universidades",
-							   "Favoritos" };
+							   "Favoritos",
+							   "Acerca"};
 
 		// Generate subtitle
 		subtitle = new String[] { "encuentre lugares",
 								  "y noticias",
-				  				   "sus lugares guardados" };
+				  				   "sus lugares guardados",
+				  				   "de la apliación"};
 
 		// Generate icon
-		icon = new int[] { R.drawable.ic_action_place, R.drawable.ic_action_make_available_offline,
-				R.drawable.ic_action_important };
+		icon = new int[] { R.drawable.ic_action_place, 
+				R.drawable.ic_action_make_available_offline,
+				R.drawable.ic_action_important,
+				R.drawable.action_about};
 
 		// Locate DrawerLayout in drawer_main.xml
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -148,6 +153,9 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 			break;
 		case 2:
 			ft.replace(R.id.content_frame, fragment3);
+			break;
+		case 3:
+			ft.replace(R.id.content_frame, fragment4);
 			break;
 		}
 		ft.commit();

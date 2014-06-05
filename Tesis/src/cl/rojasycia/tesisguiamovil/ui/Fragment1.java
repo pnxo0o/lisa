@@ -113,10 +113,11 @@ public class Fragment1 extends SherlockFragment   {
 
 		List<String> b = new ArrayList<String>();
 		b.add("Todos los lugares de Alimentación");
-		b.add("Supermercados");
 		b.add("Cafeterías");
 		b.add("Comida Rápida");
-
+		b.add("Restaurantes");
+		b.add("Supermercados");
+		
 		List<String> c = new ArrayList<String>();
 		c.add("Todos los Alojamientos");
 		c.add("Residenciales");
@@ -125,15 +126,18 @@ public class Fragment1 extends SherlockFragment   {
 		
 		List<String> d = new ArrayList<String>();
 		d.add("Todos los lugares de Entretención");
-		d.add("Espacios Publicos");
+		d.add("Museos");
+		d.add("Cines");
 		d.add("Bares");
 		d.add("Discos");
+		d.add("Espacios Publicos");
 		
 		List<String> e = new ArrayList<String>();
 		e.add("Todos los Servicios");
-		e.add("Servicio Medico");
 		e.add("Carabineros");
+		e.add("Servicio Medico");
 		e.add("Bomberos");
+		e.add("Metro");
 
 		listDataChild.put(listDataHeader.get(0), a); // Header, Child data
 		listDataChild.put(listDataHeader.get(1), b);
@@ -163,8 +167,14 @@ public class Fragment1 extends SherlockFragment   {
 		}
 		else{
 			gp = new Categoria(grupo, subGrupo);
-			latLong  = new AsyncLatLong();
-			latLong.execute();
+			if(gp.isEncontrado() == true){
+				latLong  = new AsyncLatLong();
+				latLong.execute();
+			}
+			else{
+				Toast.makeText(getActivity(), "Implementación de funcionalidad en prototipo 2", Toast.LENGTH_LONG).show();
+			}
+
 		}
 	}
 
@@ -182,7 +192,6 @@ public class Fragment1 extends SherlockFragment   {
 
 		private Thread aGPS, aWIFI;
 		private OutputStreamWriter fout;
-//		private StringBuilder sb;
 		private double latitude;
 		private double longitude;
 		private GPSTracker ubicacion;
@@ -272,8 +281,6 @@ public class Fragment1 extends SherlockFragment   {
 				if(searchResult.size() > 0){
 					Log.e("yo","descarga poi lista");
 					Iterator<Toponym> iterador = searchResult.listIterator(); 
-//					sb.append("<pois>");
-					
 					
 					ser.setOutput(fout);
 					ser.startTag("", "pois");
@@ -295,24 +302,13 @@ public class Fragment1 extends SherlockFragment   {
 						ser.startTag("", "longitud");
 						ser.text(b.getLongitude()+"");
 						ser.endTag("", "longitud");						 
-						ser.endTag("", "poi");
-						
-//						sb.append("<poi>");
-//						sb.append("<nombre>" + b.getName() + "</nombre>");
-//						sb.append("<tipo>" + b.getFeatureCode() + "</tipo>");
-//						sb.append("<latitud>" + b.getLatitude() + "</latitud>");
-//						sb.append("<longitud>" + b.getLongitude() + "</longitud>");
-//						sb.append("</poi>");
-						
+						ser.endTag("", "poi");		
 					}
+					
 					ser.endTag("", "pois");
-
 					ser.endDocument();
 					fout.close();
 					
-//					sb.append("</pois>");
-//					fout.write(sb.toString());
-//					fout.close();
 				}
 				
 			} catch (IOException e) {
@@ -332,7 +328,7 @@ public class Fragment1 extends SherlockFragment   {
         protected void onPostExecute(Integer result) {
         	mProgressDialog.dismiss();
         	if(result == OK){
-        		Toast.makeText(getActivity(), "La ubicación es - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        		//Toast.makeText(getActivity(), "La ubicación es - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
         		lanzarMapa(latitude, longitude);
         	}
         	else if(result == ERROR_GPS){

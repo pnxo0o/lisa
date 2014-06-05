@@ -92,6 +92,28 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		lblListHeader.setTypeface(null, Typeface.BOLD);
 		lblListHeader.setText(headerTitle);
 
+		switch (groupPosition){
+			case 0://unv
+				lblListHeader.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_universidad_dark,0);
+				break;
+			case 1://alimento
+				lblListHeader.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_alimentacion_dark,0);
+				break;
+			case 2://alojamiento
+				lblListHeader.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_alojamiento_dark,0);
+				break;
+			case 3://entretencion
+				lblListHeader.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_entretencion_dark,0);
+				break;
+			case 4://servicios
+				lblListHeader.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_servicios_dark,0);
+				break;
+			default:
+				lblListHeader.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_universidad_dark,0);
+				break;
+		}
+		
+
 		return convertView;
 	}
 

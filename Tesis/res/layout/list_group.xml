@@ -15,7 +15,7 @@
         android:text="@string/hello_world"
         android:layout_alignParentTop="true"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textSize="17dp" />
+        android:textSize="17sp" />
 
 
 </RelativeLayout>

@@ -103,8 +103,8 @@ public class InfUniversidadActivity extends SherlockActivity {
             else{   		
             	descarganoticias = new AsyncNoticias();
     			descarganoticias.execute();
-            	return true;
-            }  
+            } 
+        	return true;
         case android.R.id.home:
         	super.onBackPressed();
             return true;
