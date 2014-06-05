@@ -3,7 +3,7 @@
     android:id="@+id/LinearLayout2"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@drawable/card_shape_normal"
+    android:background="@drawable/btn_default"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_horizontal_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"

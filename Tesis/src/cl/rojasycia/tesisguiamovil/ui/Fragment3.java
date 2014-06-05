@@ -21,7 +21,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
 
 public class Fragment3 extends SherlockFragment {
@@ -55,11 +54,11 @@ public class Fragment3 extends SherlockFragment {
 			textoNoPoi.setVisibility(View.VISIBLE);
 		}
 		
-		listaVisualizada.setOnItemLongClickListener(new OnItemLongClickListener() {
+		listaVisualizada.setOnItemClickListener(new OnItemClickListener() {
 			
 			int posicion;
 
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long id) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
 				
 				posicion = position;
 				
@@ -113,7 +112,6 @@ public class Fragment3 extends SherlockFragment {
     				}
     			});
 				
-				return true;
                 
             }
 		}); 

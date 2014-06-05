@@ -42,7 +42,7 @@
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
         	android:onClick="buscarAqui"
-        	style="@style/st_main_button"
+        	android:background="@drawable/btn_search_default"
         	android:drawableLeft="@drawable/ic_action_place_dark"
         	android:text="@string/buscar_aqui"
         	 />
