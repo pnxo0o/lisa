@@ -40,7 +40,7 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 		setContentView(R.layout.drawer_main);
 
 		// Get the Title
-		mTitle = mDrawerTitle = "Pati Perro";
+		mTitle = mDrawerTitle = "PatiPerro";
 
 		// Generate title
 		title = new String[] { "Busqueda",
@@ -52,7 +52,7 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 		subtitle = new String[] { "encuentre lugares",
 								  "y noticias",
 				  				   "sus lugares guardados",
-				  				   "de la apliación"};
+				  				   "de la aplicación"};
 
 		// Generate icon
 		icon = new int[] { R.drawable.ic_action_place, 

@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">Pati&quot; Perro</string>
-    <string name="app_name_android">Pati Perro</string>
+    <string name="app_name">PatiPerro</string>
+    <string name="app_name_android">PatiPerro</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="lugares">Seleccione su búsqueda</string>
@@ -12,6 +12,12 @@
     <string name="buscar_aqui">Buscar en esta zona</string>
     <string name="linksitio">sitio web</string>
     <string name="leer_noticias">Leer Noticias</string>
-    <string name="no_poi">No hay Lugares guardados ):</string>
-
+    <string name="no_poi">No hay Lugares guardados :(</string>
+    <string name="acerca">Desarrollo</string>
+    <string name="desarrollo1">PatiPerro - Sistema de Apoyo a la Movilidad del Estudiante Universitario de la Región de Valparaíso.</string>
+    <string name="desarrollo2">La aplicación busca ser una guía para los estudiantes universitarios de la Región de Valparaíso, la que les brindará información sobre sus casas de estudio y primordialmente una fácil y mejor movilidad geográfica dentro de la región, suministrando información correspondiente a las distintas casas universitarias del Consejo de Rectores así como noticias extraídas de estas con su ubicación dentro de la región, y también facilidades para la ubicación de lugares de servicios, como los alojamientos, restaurantes  y otros.</string>
+    <string name="desarrollo3">Este software se construyó con</string>
+	<string name="autor">Desarrollado por Francisco Rojas</string>
+   				
+    
 </resources>
