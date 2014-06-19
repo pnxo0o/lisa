@@ -15,11 +15,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.view.LayoutInflater;
 import android.view.View;
 import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.model.PuntoDeInteres;
-import cl.rojasycia.tesisguiamovil.struct.PuntoDeInteresAdapter;
+import cl.rojasycia.tesisguiamovil.ui.struct.PuntoDeInteresAdapter;
 import cl.rojasycia.tesisguiamovil.utils.POISQLiteHelper;
 import cl.rojasycia.tesisguiamovil.utils.ParserPuntoDeInteres;
 
@@ -130,6 +131,7 @@ public class MapPOIActivity extends SherlockFragmentActivity {
     							db.execSQL(sql);
     							db.close();
     							adaptador.getItem(posicion).setFavorito(true);
+    							Toast.makeText(getApplicationContext(), "Lugar Guardado", Toast.LENGTH_SHORT).show();
     						}
     						else if(positionl == 1){
     							Intent intent = new Intent(
@@ -175,6 +177,7 @@ public class MapPOIActivity extends SherlockFragmentActivity {
     							db.execSQL(sql);
     							db.close();
     							adaptador.getItem(posicion).setFavorito(false);
+    							Toast.makeText(getApplicationContext(), "Lugar Eliminado", Toast.LENGTH_SHORT).show();
     						}
     						else if(positionl == 1){
     							String uriBegin = "geo:" + adaptador.getItem(posicion).getLatitudPOI() + "," + adaptador.getItem(posicion).getLongitudPOI(); 

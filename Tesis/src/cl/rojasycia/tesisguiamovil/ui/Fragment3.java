@@ -6,7 +6,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.model.PuntoDeInteres;
-import cl.rojasycia.tesisguiamovil.struct.PuntoDeInteresAdapter;
+import cl.rojasycia.tesisguiamovil.ui.struct.PuntoDeInteresAdapter;
 import cl.rojasycia.tesisguiamovil.utils.POISQLiteHelper;
 import cl.rojasycia.tesisguiamovil.utils.ParserPuntoDeInteres;
 import android.app.AlertDialog;
@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
@@ -97,7 +98,7 @@ public class Fragment3 extends SherlockFragment {
     						puntos.remove(posicion);
     						adaptador.notifyDataSetChanged();
     	                    adaptador.notifyDataSetInvalidated();
-
+    	                    Toast.makeText(getActivity(), "Lugar Eliminado", Toast.LENGTH_SHORT).show();
     					}
     					else if(positionl == 1){
     						String uriBegin = "geo:" + adaptador.getItem(posicion).getLatitudPOI() + "," + adaptador.getItem(posicion).getLongitudPOI(); 
@@ -115,10 +116,7 @@ public class Fragment3 extends SherlockFragment {
                 
             }
 		}); 
-	
 		return rootView;
-		
-		
 	}
 
 }

@@ -3,7 +3,7 @@ package cl.rojasycia.tesisguiamovil.ui;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import cl.rojasycia.tesisguiamovil.R;
-import cl.rojasycia.tesisguiamovil.struct.LicensesFragment;
+import cl.rojasycia.tesisguiamovil.ui.struct.LicensesFragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;

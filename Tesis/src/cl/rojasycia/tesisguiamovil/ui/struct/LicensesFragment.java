@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-package cl.rojasycia.tesisguiamovil.struct;
+package cl.rojasycia.tesisguiamovil.ui.struct;
 
 import android.os.AsyncTask;
 import android.os.Bundle;

@@ -38,7 +38,10 @@
             android:name="cl.rojasycia.tesisguiamovil.ui.InfUniversidadActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
+            android:uiOptions="splitActionBarWhenNarrow"
             android:theme="@style/Theme.Gmovilgreen.TranslucentActionBar">
+            <meta-data android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow" />
         </activity>
         
         <activity 

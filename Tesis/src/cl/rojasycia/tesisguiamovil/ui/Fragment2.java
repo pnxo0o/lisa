@@ -6,7 +6,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.model.Universidad;
-import cl.rojasycia.tesisguiamovil.struct.*;
+import cl.rojasycia.tesisguiamovil.ui.struct.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,16 +45,14 @@ public class Fragment2 extends SherlockFragment  {
             		lanzarUniversidad(Universidad.UV);
             		break;
             	case 2:
-            		lanzarUniversidad(Universidad.USM);
+            		lanzarUniversidad(Universidad.PUCV);
             		break;
             	case 3:
-            		lanzarUniversidad(Universidad.PUCV);
+            		lanzarUniversidad(Universidad.USM);
             		break;
             	}
             }
         });
-
-
 		return rootView;
 	}
 	
@@ -63,14 +61,14 @@ public class Fragment2 extends SherlockFragment  {
 		intent = new Intent(getActivity(), InfUniversidadActivity.class);
 		intent.putExtra("universidad_elegida", a);
 		startActivity(intent);
-		getActivity().getSupportFragmentManager().popBackStack();
 	}
 
 	private void rellenarArrayList() {
 		arrayUniversidades.add(new LUniversidadItem("Universidad de Playa Ancha de Ciencias de la Educación", R.drawable.u_upla));
 		arrayUniversidades.add(new LUniversidadItem("Universidad de Valparaíso", R.drawable.u_uv));
-		arrayUniversidades.add(new LUniversidadItem("Universidad Técnica Federico Santa María", R.drawable.u_usm));
 		arrayUniversidades.add(new LUniversidadItem("Pontificia Universidad Católica de Valparaiso", R.drawable.u_pucv));
+		arrayUniversidades.add(new LUniversidadItem("Universidad Técnica Federico Santa María", R.drawable.u_usm));
+
 	}
 
 

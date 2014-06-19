@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.view.View;
 import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.model.Noticia;
-import cl.rojasycia.tesisguiamovil.struct.NoticiasAdapter;
+import cl.rojasycia.tesisguiamovil.ui.struct.NoticiasAdapter;
+import cl.rojasycia.tesisguiamovil.utils.NetworkUtil;
 import cl.rojasycia.tesisguiamovil.utils.ParserNoticia;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -49,7 +51,11 @@ public class NoticiasActivity extends SherlockActivity {
 		lSelected.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
-				lanzarWeb(adaptador.getItem(position).getLinkNoticia());
+				
+				if ( NetworkUtil.getConnectivityStatus(getApplicationContext()) == NetworkUtil.TYPE_NOT_CONNECTED ){
+	            	Toast.makeText(getApplicationContext(), "No hay conexión a internet", Toast.LENGTH_SHORT).show();
+				}
+				else lanzarWeb(adaptador.getItem(position).getLinkNoticia());
 			}
 		});
 	}

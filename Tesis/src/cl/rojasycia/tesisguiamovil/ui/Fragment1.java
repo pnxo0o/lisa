@@ -17,7 +17,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.model.Categoria;
-import cl.rojasycia.tesisguiamovil.struct.ExpandableListAdapter;
+import cl.rojasycia.tesisguiamovil.ui.struct.ExpandableListAdapter;
 import cl.rojasycia.tesisguiamovil.utils.GPSTracker;
 import cl.rojasycia.tesisguiamovil.utils.NetworkUtil;
 import android.app.ProgressDialog;
@@ -208,13 +208,13 @@ public class Fragment1 extends SherlockFragment   {
 						getActivity().openFileOutput("poi_descargados.xml",
 				        Context.MODE_PRIVATE));
 			} catch (FileNotFoundException e1) {
-				Log.e("yo","cagamos escribiendo el xml culiao xd");
+				Log.e("yo","fallo xml");
 				e1.printStackTrace();
 			} catch (IllegalArgumentException e) {
-				Log.e("yo","cagamos escribiendo el xml culiao xd");
+				Log.e("yo","fallo xml");
 				e.printStackTrace();
 			} catch (IllegalStateException e) {
-				Log.e("yo","cagamos escribiendo el xml culiao xd");
+				Log.e("yo","fallo xml");
 				e.printStackTrace();
 			}
 
