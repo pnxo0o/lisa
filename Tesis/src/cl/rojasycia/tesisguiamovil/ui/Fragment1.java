@@ -108,8 +108,9 @@ public class Fragment1 extends SherlockFragment   {
 		a.add("Todas las Universidades");
 		a.add("Universidad de Playa Ancha de Ciencias de la Educación");
 		a.add("Universidad de Valparaíso");
-		a.add("Universidad Técnica Federico Santa María");
 		a.add("Pontificia Universidad Católica de Valparaíso");
+		a.add("Universidad Técnica Federico Santa María");
+
 
 		List<String> b = new ArrayList<String>();
 		b.add("Todos los lugares de Alimentación");
@@ -222,7 +223,7 @@ public class Fragment1 extends SherlockFragment   {
 			aGPS = new Thread(new Runnable() {
 			    public void run() {
 					try {
-						Thread.sleep(GPSTracker.TIEMPO_GPS+200);
+						Thread.sleep(GPSTracker.TIEMPO_GPS+500);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					} 
@@ -266,6 +267,7 @@ public class Fragment1 extends SherlockFragment   {
 		        	latitude = ubicacion.getLatitude();
 			        longitude = ubicacion.getLongitude();
 			        ubicacion.stopUsingGPS();
+			        Log.e("yo",latitude+" - "+longitude);
 			        if(latitude == 0.0 && longitude == 0.0) return FALLO_TIME_OUT;
 	        	}
 	        		

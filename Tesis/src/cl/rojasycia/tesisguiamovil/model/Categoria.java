@@ -7,8 +7,8 @@ package cl.rojasycia.tesisguiamovil.model;
  * 0-0 Todas las ues x
  * 0-1 UPLA
  * 0-2 UV
- * 0-3 UTFSM
- * 0-4 PUCV
+ * 0-3 PUCV
+ * 0-4 UTFSM
  * 
  * Alimentación:
  * 1-0 Todo alimento
@@ -54,16 +54,6 @@ public class Categoria {
 		if (grupoSeleccionado == UNIVERSIDAD){
 			if(tipoSeleccionado == 0){
 				this.grupo = new String[]{"UNIV"};//todo univ
-				this.encontrado = true;
-			}
-		}
-		else if(grupoSeleccionado == ALIMENTACION){
-			if(tipoSeleccionado == 0){
-				this.grupo = new String[]{"RESTO"};//todo
-				this.encontrado = true;
-			}
-			else if(tipoSeleccionado == 3){
-				this.grupo = new String[]{"RESTO"};//restaurnat
 				this.encontrado = true;
 			}
 		}

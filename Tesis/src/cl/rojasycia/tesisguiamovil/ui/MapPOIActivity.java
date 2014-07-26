@@ -30,6 +30,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapPOIActivity extends SherlockFragmentActivity {
@@ -43,6 +44,7 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 	private ListView listaVisualizada;
 	private PuntoDeInteresAdapter adaptador;
 	private ArrayList<PuntoDeInteres> puntosArray;
+	private ArrayList<Marker> arrayMarker;
 	
 
 	@Override
@@ -53,15 +55,17 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 
 		listaVisualizada = (ListView)findViewById(R.id.listViewPOI);
 		
+		arrayMarker = new ArrayList<Marker>();
+		
 		Bundle datos = this.getIntent().getExtras();
 		latitud = datos.getDouble("latitud");
 		longitud = datos.getDouble("longitud");
 		
 		mapa = ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-		mapa.moveCamera(CameraUpdateFactory.zoomTo(15));
+		mapa.moveCamera(CameraUpdateFactory.zoomTo(11));
 		
 		posicionUsuario = new LatLng (latitud, longitud);
-		mapa.addMarker(new MarkerOptions().position(posicionUsuario));
+		//mapa.addMarker(new MarkerOptions().position(posicionUsuario));
 		mapa.animateCamera(CameraUpdateFactory.newLatLng(posicionUsuario), 200, null);
 		
 		listaGuardadaPtos = new ParserPuntoDeInteres(getApplicationContext());
@@ -76,14 +80,16 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 			while( i.hasNext() ) {
 				   PuntoDeInteres b = (PuntoDeInteres) i.next();
 				   LatLng POILatLng = new LatLng(b.getLatitudPOI(), b.getLongitudPOI());
-				   mapa.addMarker(new MarkerOptions()
+				   Marker te = mapa.addMarker(new MarkerOptions().title(b.getNombrePOI())
 					.position(POILatLng));
+				   arrayMarker.add(te);
 			   }
 		}
 		
 		listaVisualizada.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {		
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {	
+				arrayMarker.get(position).showInfoWindow();
 				mapa.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(adaptador.getItem(position).getLatitudPOI(), adaptador.getItem(position).getLongitudPOI())), 200, null);
 			}
 		});

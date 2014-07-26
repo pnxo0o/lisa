@@ -40,7 +40,7 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 		setContentView(R.layout.drawer_main);
 
 		// Get the Title
-		mTitle = mDrawerTitle = "PatiPerro";
+		mTitle = mDrawerTitle =  getResources().getString(R.string.app_name);
 
 		// Generate title
 		title = new String[] { "Busqueda",
@@ -88,7 +88,7 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 		// ActionBarDrawerToggle ties together the the proper interactions
 		// between the sliding drawer and the action bar app icon
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_drawer, R.string.drawer_open,
+				R.drawable.ic_navigation_drawer, R.string.drawer_open,
 				R.string.drawer_close) {
 
 			public void onDrawerClosed(View view) {
