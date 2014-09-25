@@ -14,6 +14,9 @@ import org.geonames.WebService;
 import org.xmlpull.v1.XmlSerializer;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 
 import cl.rojasycia.tesisguiamovil.R;
 import cl.rojasycia.tesisguiamovil.model.Categoria;
@@ -23,6 +26,7 @@ import cl.rojasycia.tesisguiamovil.utils.NetworkUtil;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,7 +40,9 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
-public class Fragment1 extends SherlockFragment   {
+public class Fragment1 extends SherlockFragment  implements
+GooglePlayServicesClient.ConnectionCallbacks,
+GooglePlayServicesClient.OnConnectionFailedListener  {
 	
 	public static final int ERROR_GPS = 1;
 	public static final int FALLO_TIME_OUT = 2;
@@ -54,6 +60,7 @@ public class Fragment1 extends SherlockFragment   {
 	private AsyncLatLong latLong;
 	private ExpandableListAdapter listAdapter;
 	private Categoria gp;
+	private LocationClient mLocationClient;
 	
 	
 	@Override
@@ -87,9 +94,9 @@ public class Fragment1 extends SherlockFragment   {
 			    	buscarAqui();
 			    } 
 			}); 
+		mLocationClient = new LocationClient(getActivity(), this, this);
 		
 		return rootView;
-		
 	}
 	
 	private void prepararDatos() {
@@ -191,7 +198,7 @@ public class Fragment1 extends SherlockFragment   {
 
 	private class AsyncLatLong extends AsyncTask<String, Void, Integer>{
 
-		private Thread aGPS, aWIFI;
+//		private Thread aGPS, aWIFI;
 		private OutputStreamWriter fout;
 		private double latitude;
 		private double longitude;
@@ -201,7 +208,10 @@ public class Fragment1 extends SherlockFragment   {
 		@Override
         protected void onPreExecute() {
 			ubicacion = new GPSTracker(getActivity(), NetworkUtil.getConnectivityStatus(getActivity()));
-			
+			Location ubicacionActual = mLocationClient.getLastLocation();
+			latitude = ubicacionActual.getLatitude();
+	        longitude = ubicacionActual.getLongitude();
+
 			ser = Xml.newSerializer();
 			 
 			try {
@@ -220,59 +230,59 @@ public class Fragment1 extends SherlockFragment   {
 			}
 
 			
-			aGPS = new Thread(new Runnable() {
-			    public void run() {
-					try {
-						Thread.sleep(GPSTracker.TIEMPO_GPS+500);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					} 
-				}
-
-			 });
-			aWIFI = new Thread(new Runnable() {
-			    public void run() {
-					try {
-						Thread.sleep(GPSTracker.TIEMPO_WIFI+200);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					} 
-				}
-
-			 });
+//			aGPS = new Thread(new Runnable() {
+//			    public void run() {
+//					try {
+//						Thread.sleep(GPSTracker.TIEMPO_GPS+500);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					} 
+//				}
+//
+//			 });
+//			aWIFI = new Thread(new Runnable() {
+//			    public void run() {
+//					try {
+//						Thread.sleep(GPSTracker.TIEMPO_WIFI+200);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					} 
+//				}
+//
+//			 });
 			mProgressDialog.show();
         }
  
         @Override
         protected Integer doInBackground(String... params) {
             // Aquí hacemos las tareas 
-        	
-	        if(NetworkUtil.getConnectivityStatus(getActivity()) == NetworkUtil.TYPE_WIFI){
-	        	if(!ubicacion.isWifiEnabled()){
-	        		return ERROR_WIFI;
-	        	}
-	        	else if(ubicacion.canGetLocation()){
-	        		aWIFI.run();
-	        		latitude = ubicacion.getLatitude();
-		        	longitude = ubicacion.getLongitude();
-		        	if(latitude == 0.0 && longitude == 0.0) return FALLO_TIME_OUT;
-	        	}
-	        }
-	        else {
-	        	if(!ubicacion.isGPSEnabled()){
-	        		return ERROR_GPS;
-	        	}
-	        	else if(ubicacion.canGetLocation()) {
-	        		aGPS.run();
-		        	latitude = ubicacion.getLatitude();
-			        longitude = ubicacion.getLongitude();
-			        ubicacion.stopUsingGPS();
-			        Log.e("yo",latitude+" - "+longitude);
-			        if(latitude == 0.0 && longitude == 0.0) return FALLO_TIME_OUT;
-	        	}
-	        		
-	        }
-	        
+//        	
+//	        if(NetworkUtil.getConnectivityStatus(getActivity()) == NetworkUtil.TYPE_WIFI){
+//	        	if(!ubicacion.isWifiEnabled()){
+//	        		return ERROR_WIFI;
+//	        	}
+//	        	else if(ubicacion.canGetLocation()){
+//	        		aWIFI.run();
+//	        		latitude = ubicacion.getLatitude();
+//		        	longitude = ubicacion.getLongitude();
+//		        	if(latitude == 0.0 && longitude == 0.0) return FALLO_TIME_OUT;
+//	        	}
+//	        }
+//	        else {
+//	        	if(!ubicacion.isGPSEnabled()){
+//	        		return ERROR_GPS;
+//	        	}
+//	        	else if(ubicacion.canGetLocation()) {
+//	        		aGPS.run();
+//		        	latitude = ubicacion.getLatitude();
+//			        longitude = ubicacion.getLongitude();
+//			        ubicacion.stopUsingGPS();
+//			        Log.e("yo",latitude+" - "+longitude);
+//			        if(latitude == 0.0 && longitude == 0.0) return FALLO_TIME_OUT;
+//	        	}
+//	        		
+//	        }
+//	        
 	        
 	        Log.e("yo","ubicacion lista");
        	
@@ -347,8 +357,28 @@ public class Fragment1 extends SherlockFragment   {
         	}
         		
         }
-        
-        
 	}
 
+	@Override
+	public void onConnectionFailed(ConnectionResult arg0) {
+	}
+
+	@Override
+	public void onConnected(Bundle arg0) {
+	}
+
+	@Override
+	public void onDisconnected() {
+	}
+	
+    @Override
+	public void onStart() {
+       super.onStart();
+       mLocationClient.connect();
+    }
+    @Override
+	public void onStop() {
+       mLocationClient.disconnect();
+       super.onStop();
+    }
 }

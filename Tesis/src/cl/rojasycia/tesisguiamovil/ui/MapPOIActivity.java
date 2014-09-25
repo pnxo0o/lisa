@@ -39,8 +39,8 @@ public class MapPOIActivity extends SherlockFragmentActivity {
 	private double latitud;
 	private double longitud;
 	private LatLng posicionUsuario;
-	ParserPuntoDeInteres listaGuardadaPtos;
-	List<PuntoDeInteres> puntosList;
+	private ParserPuntoDeInteres listaGuardadaPtos;
+	private List<PuntoDeInteres> puntosList;
 	private ListView listaVisualizada;
 	private PuntoDeInteresAdapter adaptador;
 	private ArrayList<PuntoDeInteres> puntosArray;
@@ -204,6 +204,7 @@ public class MapPOIActivity extends SherlockFragmentActivity {
                 
             }
 		}); 
+		mapa.setMyLocationEnabled(true);
 	}
 
 	@Override

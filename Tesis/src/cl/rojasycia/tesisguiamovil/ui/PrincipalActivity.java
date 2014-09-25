@@ -2,10 +2,13 @@ package cl.rojasycia.tesisguiamovil.ui;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import cl.rojasycia.tesisguiamovil.R;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
+import android.app.Dialog;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -25,13 +28,15 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 	String[] title;
 	String[] subtitle;
 	int[] icon;
-	Fragment fragment1 = new Fragment1();
-	Fragment fragment2 = new Fragment2();
-	Fragment fragment3 = new Fragment3();
-	Fragment fragment4 = new Fragment4();
+	private Fragment fragment1 = new Fragment1();
+	private Fragment fragment2 = new Fragment2();
+	private Fragment fragment3 = new Fragment3();
+	private Fragment fragment4 = new Fragment4();
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 	
+	int status;
+	int requestCode;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -186,4 +191,23 @@ public class PrincipalActivity extends SherlockFragmentActivity  {
 		mTitle = title;
 		getSupportActionBar().setTitle(mTitle);
 	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		//chequear google play services
+		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+		if(status!=ConnectionResult.SUCCESS){
+		    requestCode = 10;
+		    dialogoGooglePlayServicios();
+		}
+	}
+	
+	public void dialogoGooglePlayServicios(){
+		Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
+	    dialog.setCancelable(false);
+	    dialog.show();
+	}
 }
+
+
